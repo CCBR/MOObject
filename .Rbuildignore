@@ -2,3 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^\.pre-commit-config\.yaml$
+^\.github$
+^AGENTS\.md$
+^SECURITY\.md$
