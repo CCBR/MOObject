@@ -126,4 +126,3 @@ MOObject should be lightweight and fast.
 - MOSuite analysis functions work with MOObject-defined objects without API regressions.
 - Both repositories pass tests, linting, and package checks.
 - Documentation in both repositories clearly reflects the new package boundary.
-

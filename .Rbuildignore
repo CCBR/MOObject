@@ -6,3 +6,6 @@
 ^\.github$
 ^AGENTS\.md$
 ^SECURITY\.md$
+^CITATION\.cff$
+^README\.html$
+^codemeta\.json$

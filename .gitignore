@@ -1,6 +1,13 @@
-.Rproj.user
-.Rhistory
-.RData
-.httr-oauth
 .DS_Store
+.httr-oauth
+.posit
 .quarto
+.RData
+.Rhistory
+.Rproj.user
+.vscode
+/doc
+/docs
+/inst/doc
+/Meta
+README.html

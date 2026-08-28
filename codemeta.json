@@ -1,0 +1,30 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "author": [
+    {
+      "@id": "https://orcid.org/0000-0003-3283-829X",
+      "@type": "Person",
+      "familyName": "Sovacool",
+      "givenName": "Kelly"
+    },
+    {
+      "@type": "Person",
+      "familyName": "Homan",
+      "givenName": "Philip"
+    },
+    {
+      "@id": "https://orcid.org/0000-0001-8978-8495",
+      "@type": "Person",
+      "familyName": "Koparde",
+      "givenName": "Vishal"
+    }
+  ],
+  "codeRepository": "https://github.com/CCBR/MOObject",
+  "description": "MOObject defines the multiOmicDataSet object class which is used in MOSuite for differential RNA-seq and multi-omics analyses. Separating the MOObject class definition from MOSuite allows for lightweight installations in downstream workflows. See the website for more information, documentation, and examples at <https://ccbr.github.io/MOObject/>.",
+  "identifier": "https://doi.org/10.5281/zenodo.16371580",
+  "license": "https://spdx.org/licenses/MIT",
+  "name": "MOObject: multiOmicDataSet object class for MOSuite",
+  "url": "https://ccbr.github.io/MOObject/",
+  "version": "0.4.1.9000"
+}

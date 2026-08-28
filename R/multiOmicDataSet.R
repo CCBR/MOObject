@@ -121,7 +121,9 @@ create_multiOmicDataSet_from_dataframes <- function(
   }
 
   meta_sample_ids <- as.character(sample_metadata[[sample_id_colname]])
-  missing_sample_ids <- meta_sample_ids[!(meta_sample_ids %in% colnames(counts_dat))]
+  missing_sample_ids <- meta_sample_ids[
+    !(meta_sample_ids %in% colnames(counts_dat))
+  ]
   if (length(missing_sample_ids) > 0) {
     stop(
       glue::glue(
@@ -289,8 +291,14 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
     dir.create(output_dir, recursive = TRUE)
   }
 
-  readr::write_csv(moo@sample_meta, file = file.path(output_dir, "sample_metadata.csv"))
-  readr::write_csv(moo@annotation, file = file.path(output_dir, "feature_annotation.csv"))
+  readr::write_csv(
+    moo@sample_meta,
+    file = file.path(output_dir, "sample_metadata.csv")
+  )
+  readr::write_csv(
+    moo@annotation,
+    file = file.path(output_dir, "feature_annotation.csv")
+  )
 
   counts_dir <- file.path(output_dir, "counts")
   if (!dir.exists(counts_dir)) {
@@ -307,7 +315,10 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
       for (sub_count_type in names(counts_dat)) {
         readr::write_csv(
           counts_dat[[sub_count_type]],
-          file = file.path(sub_counts_dir, paste0(sub_count_type, "_counts.csv"))
+          file = file.path(
+            sub_counts_dir,
+            paste0(sub_count_type, "_counts.csv")
+          )
         )
       }
     } else {

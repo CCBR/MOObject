@@ -1,5 +1,4 @@
 
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # MOObject 🐮 <a href="https://ccbr.github.io/MOSuite/"><img src="https://github.com/CCBR/MOSuite/blob/678ac70b8d462cdd153bce11ed89724f7983e759/inst/extdata/logo/mosuite_logo_with_text.png" align="right" height="160" alt="MOSuite website" /></a>
@@ -11,8 +10,8 @@ multiOmicDataSet object class for MOSuite
 [![R-CMD-check](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/CCBR/MOObject/graph/badge.svg?token=730OAPA4NU)](https://codecov.io/gh/CCBR/MOObject)
 [![CodeQL](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql)
-[![version](https://img.shields.io/github/v/release/ccbr/MOObject.png)](https://github.com/CCBR/MOObject/releases/latest)
-[![docker](https://img.shields.io/docker/v/nciccbr/mosuite?logo=docker&label=docker&color=blue.png)](https://hub.docker.com/r/nciccbr/mosuite)
+[![version](https://img.shields.io/github/v/release/ccbr/MOObject)](https://github.com/CCBR/MOObject/releases/latest)
+[![docker](https://img.shields.io/docker/v/nciccbr/mosuite?logo=docker&label=docker&color=blue)](https://hub.docker.com/r/nciccbr/mosuite)
 <!--[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16371580.svg)](https://doi.org/10.5281/zenodo.16371580)-->
 <!-- badges: end -->
 

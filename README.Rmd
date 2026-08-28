@@ -60,7 +60,7 @@ TODO example of creating object
 
 MOSuite is the main package containing method implementations for bulk-RNA-seq and multi-omics analysis.
 Please see the [introductory vignette](https://ccbr.github.io/MOSuite/articles/intro.html)
-for a quick start tutorial, 
+for a quick start tutorial,
 or take a look at the [reference documentation](https://ccbr.github.io/MOSuite/reference/index.html)
 for detailed information on each function in the package.
 
