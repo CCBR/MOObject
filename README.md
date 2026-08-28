@@ -2,7 +2,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# MOObject 🐮 <a href="https://ccbr.github.io/MOSuite/"><img src="inst/extdata/logo/mosuite_logo_with_text.png" align="right" height="160" alt="MOSuite website" /></a>
+# MOObject 🐮 <a href="https://ccbr.github.io/MOSuite/"><img src="https://github.com/CCBR/MOSuite/blob/678ac70b8d462cdd153bce11ed89724f7983e759/inst/extdata/logo/mosuite_logo_with_text.png" align="right" height="160" alt="MOSuite website" /></a>
 
 multiOmicDataSet object class for MOSuite
 
