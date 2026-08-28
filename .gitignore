@@ -6,6 +6,8 @@
 .Rhistory
 .Rproj.user
 .vscode
+**/*.quarto_ipynb
+/.quarto/
 /doc
 /docs
 /inst/doc
