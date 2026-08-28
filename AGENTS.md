@@ -28,6 +28,8 @@ for detailed instructions on how to contribute to MOObject.
 
 ## Commit messages
 
+- Always check for user approval before running any commit command.
+- If approval has not been given, proceed with code changes and tests only; do not commit.
 - Commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (as enforced in `CONTRIBUTING.md`).
 - Generate messages from staged changes only (`git diff --staged`); do not include unrelated work.
 - Commits should be atomic: one logical change per commit.
@@ -73,5 +75,5 @@ Example:
 ```
 ## development version
 
-- Fix bug in `detect_absolute_paths()` to ignore comments. (#123, @username)
+- Fix bug in `detect_absolute_paths()` to ignore comments. (#123, @github-username)
 ```
