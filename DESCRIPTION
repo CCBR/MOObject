@@ -1,0 +1,35 @@
+Package: MOObject
+Title: multiOmicDataSet object class for MOSuite
+Version: 0.4.1.9000
+Authors@R: c(
+    person("Kelly", "Sovacool", , "kelly.sovacool@nih.gov", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-3283-829X")),
+    person("Philip", "Homan", , "philip.homan@nih.gov", role = "aut"),
+    person("Vishal", "Koparde", , "vishal.koparde@nih.gov", role = "aut",
+           comment = c(ORCID = "0000-0001-8978-8495"))
+  )
+Description: MOObject defines the multiOmicDataSet object class which is used in
+    MOSuite for differential RNA-seq and multi-omics analyses.
+    Separating the MOObject class definition from MOSuite allows for lightweight
+    installations in downstream workflows.
+    See the website for more information,
+    documentation, and examples at <https://ccbr.github.io/MOObject/>.
+License: MIT + file LICENSE
+URL: https://github.com/CCBR/MOObject, https://ccbr.github.io/MOObject/
+BugReports: https://github.com/CCBR/MOObject/issues
+Encoding: UTF-8
+LazyData: true
+LazyDataCompression: xz
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.1.0
+Imports:
+    glue,
+    readr,
+    S7
+Suggests:
+    cffr,
+    knitr,
+    rmarkdown,
+    roxygen2 (>= 8.0.0),
+    testthat (>= 3.0.0),
+    usethis

@@ -1,0 +1,73 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# MOObject 🐮 <a href="https://ccbr.github.io/MOSuite/"><img src="inst/extdata/logo/mosuite_logo_with_text.png" align="right" height="160" alt="MOSuite website" /></a>
+
+multiOmicDataSet object class for MOSuite
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/CCBR/MOObject/graph/badge.svg?token=730OAPA4NU)](https://codecov.io/gh/CCBR/MOObject)
+[![CodeQL](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql)
+[![version](https://img.shields.io/github/v/release/ccbr/MOObject)](https://github.com/CCBR/MOObject/releases/latest)
+[![docker](https://img.shields.io/docker/v/nciccbr/mosuite?logo=docker&label=docker&color=blue)](https://hub.docker.com/r/nciccbr/mosuite)
+<!--[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16371580.svg)](https://doi.org/10.5281/zenodo.16371580)-->
+<!-- badges: end -->
+
+MOObject defines the multiOmicDataSet object class which is used in MOSuite for differential RNA-seq and multi-omics analyses. Separating the MOObject class definition from MOSuite allows for lightweight installations in downstream workflows. See the [MOObject website](https://ccbr.github.io/MOObject) for more information about the class, and see the [MOSuite website](https://ccbr.github.io/MOSuite/) for the most in-depth discussion about using these packages.
+
+## Installation
+
+You can install the development version of MOObject from [GitHub](https://github.com/CCBR/MOObject) with:
+
+```r
+# install.packages("remotes")
+remotes::install_github("CCBR/MOObject", dependencies = TRUE)
+```
+
+Or install a specific version:
+
+```r
+remotes::install_github("CCBR/MOObject", dependencies = TRUE, ref = "v0.4.1")
+```
+
+There is a Docker container with MOObject + MOSuite installed at <https://hub.docker.com/r/nciccbr/mosuite>.
+You can execute it with your preferred engine such as docker, podman, singularity/apptainer, etc.
+
+```sh
+podman pull docker://nciccbr/mosuite:v0.4.1
+```
+
+## Usage
+
+### MOObject
+
+TODO example of creating object
+
+### MOSuite
+
+MOSuite is the main package containing method implementations for bulk-RNA-seq and multi-omics analysis.
+Please see the [introductory vignette](https://ccbr.github.io/MOSuite/articles/intro.html)
+for a quick start tutorial, 
+or take a look at the [reference documentation](https://ccbr.github.io/MOSuite/reference/index.html)
+for detailed information on each function in the package.
+
+## Help & Contributing
+
+Come across a **bug**? Open an [issue](https://github.com/CCBR/MOObject/issues) and include a minimal reproducible example.
+
+Have a **question**? Ask it in [discussions](https://github.com/CCBR/MOObject/discussions).
+
+Want to **contribute** to this project? Check out the [contributing guidelines](.github/CONTRIBUTING.md).
