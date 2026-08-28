@@ -8,7 +8,7 @@ multiOmicDataSet object class for MOSuite
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/CCBR/MOObject/graph/badge.svg?token=730OAPA4NU)](https://codecov.io/gh/CCBR/MOObject)
+[![codecov](https://codecov.io/gh/CCBR/MOObject/graph/badge.svg?token=9Ol7vkrqsC)](https://codecov.io/gh/CCBR/MOObject)
 [![CodeQL](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql)
 [![version](https://img.shields.io/github/v/release/ccbr/MOObject)](https://github.com/CCBR/MOObject/releases/latest)
 [![docker](https://img.shields.io/docker/v/nciccbr/mosuite?logo=docker&label=docker&color=blue)](https://hub.docker.com/r/nciccbr/mosuite)
