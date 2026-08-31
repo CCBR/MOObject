@@ -7,15 +7,17 @@
 multiOmicDataSet(sample_metadata, anno_dat, counts_lst, analyses_lst = list())
 }
 \arguments{
-\item{sample_metadata}{sample metadata as a data frame. The first column is
-assumed to contain sample IDs that correspond to columns in raw counts.}
+\item{sample_metadata}{sample metadata as a data frame or tibble. The first column is assumed to contain the sample
+IDs which must correspond to column names in the raw counts.}
 
-\item{anno_dat}{data frame of feature annotations.}
+\item{anno_dat}{data frame of feature annotations, such as gene symbols or any other information about the features
+in \code{counts_lst}.}
 
-\item{counts_lst}{named list of count data frames. Each count data frame must
-have a feature ID column first and sample columns after.}
+\item{counts_lst}{named list of data frames containing counts, e.g. expected feature counts from RSEM. Each data
+frame is expected to contain a \code{feature_id} column as the first column, and all remaining columns are sample IDs in
+the \code{sample_meta}.}
 
-\item{analyses_lst}{named list of analysis results.}
+\item{analyses_lst}{named list of analysis results, e.g. DESeq results object}
 }
 \value{
 A \code{multiOmicDataSet} S7 object.
@@ -26,12 +28,15 @@ multiOmicDataSet class
 \section{Additional properties}{
 
 \describe{
-\item{\code{@sample_meta}}{sample metadata as a data frame.}
+\item{\code{@sample_meta}}{sample metadata as a data frame or tibble. The first column is assumed to contain the sample
+IDs which must correspond to column names in the raw counts.}
 
-\item{\code{@annotation}}{feature annotation data frame.}
+\item{\code{@annotation}}{data frame of feature annotations, such as gene symbols or any other information about the
+features in the counts list.}
 
-\item{\code{@counts}}{named list of counts data frames.}
+\item{\code{@counts}}{named list of counts data frames (e.g. \code{raw}, \code{clean}, \code{cpm}, \code{filt}, \code{norm}, \code{batch}). Each data
+frame is expected to contain a feature ID column as the first column, and all remaining columns are sample IDs.}
 
-\item{\code{@analyses}}{named list of analysis results.}
+\item{\code{@analyses}}{named list of analysis results (e.g. DESeq2 results, colors).}
 }}
 

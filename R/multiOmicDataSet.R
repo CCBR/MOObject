@@ -1,16 +1,21 @@
 #' multiOmicDataSet class
 #'
-#' @param sample_metadata sample metadata as a data frame. The first column is
-#'   assumed to contain sample IDs that correspond to columns in raw counts.
-#' @param anno_dat data frame of feature annotations.
-#' @param counts_lst named list of count data frames. Each count data frame must
-#'   have a feature ID column first and sample columns after.
-#' @param analyses_lst named list of analysis results.
+#' @param sample_metadata sample metadata as a data frame or tibble. The first column is assumed to contain the sample
+#'   IDs which must correspond to column names in the raw counts.
+#' @param anno_dat data frame of feature annotations, such as gene symbols or any other information about the features
+#'   in `counts_lst`.
+#' @param counts_lst named list of data frames containing counts, e.g. expected feature counts from RSEM. Each data
+#'   frame is expected to contain a `feature_id` column as the first column, and all remaining columns are sample IDs in
+#'   the `sample_meta`.
+#' @param analyses_lst named list of analysis results, e.g. DESeq results object
 #'
-#' @prop sample_meta sample metadata as a data frame.
-#' @prop annotation feature annotation data frame.
-#' @prop counts named list of counts data frames.
-#' @prop analyses named list of analysis results.
+#' @prop sample_meta sample metadata as a data frame or tibble. The first column is assumed to contain the sample
+#'   IDs which must correspond to column names in the raw counts.
+#' @prop annotation data frame of feature annotations, such as gene symbols or any other information about the
+#'   features in the counts list.
+#' @prop counts named list of counts data frames (e.g. `raw`, `clean`, `cpm`, `filt`, `norm`, `batch`). Each data
+#'   frame is expected to contain a feature ID column as the first column, and all remaining columns are sample IDs.
+#' @prop analyses named list of analysis results (e.g. DESeq2 results, colors).
 #'
 #' @returns A `multiOmicDataSet` S7 object.
 #' @export
@@ -97,12 +102,12 @@ multiOmicDataSet <- S7::new_class(
 #' Construct a multiOmicDataSet object from data frames
 #'
 #' @inheritParams multiOmicDataSet
-#' @param counts_dat data frame of feature counts.
-#' @param sample_id_colname column in `sample_metadata` that contains sample IDs.
-#'   If `NULL`, use the first column.
-#' @param feature_id_colname column in `counts_dat` that contains feature IDs.
-#'   If `NULL`, use the first column.
-#' @param count_type type to assign the values of `counts_dat` to in `counts`.
+#' @param counts_dat data frame of feature counts (e.g. expected feature counts from RSEM).
+#' @param sample_id_colname name of the column in `sample_metadata` that contains the sample IDs. (Default: `NULL` -
+#'   first column in the sample metadata will be used.)
+#' @param feature_id_colname name of the column in `counts_dat` that contains feature/gene IDs. (Default: `NULL` - first
+#'   column in the count data will be used.)
+#' @param count_type type to assign the values of `counts_dat` to in the `counts` slot
 #'
 #' @returns A `multiOmicDataSet` object.
 #' @export
@@ -148,13 +153,14 @@ create_multiOmicDataSet_from_dataframes <- function(
   )
 }
 
-#' Construct a multiOmicDataSet object from delimited files
+#' Construct a multiOmicDataSet object from text files (e.g. TSV, CSV).
 #'
 #' @inheritParams create_multiOmicDataSet_from_dataframes
-#' @param sample_meta_filepath path to sample metadata file.
-#' @param feature_counts_filepath path to feature counts file.
-#' @param delim delimiter for `readr::read_delim()`.
-#' @param ... additional arguments passed to `readr::read_delim()`.
+#' @param sample_meta_filepath path to text file with sample IDs and metadata for differential analysis.
+#' @param feature_counts_filepath path to text file of expected feature counts (e.g. gene counts from RSEM).
+#' @param delim Delimiter used in the input files. Any delimiter accepted by `readr::read_delim()` can be used.
+#'   If the files are in CSV format, set `delim = ','`; for TSV format, set `delim = '\t'`.
+#' @param ... additional arguments forwarded to `readr::read_delim()`.
 #'
 #' @returns A `multiOmicDataSet` object.
 #' @export
@@ -179,11 +185,12 @@ create_multiOmicDataSet_from_files <- function(
   )
 }
 
-#' Extract count data from a multiOmicDataSet
+#' Extract count data
 #'
-#' @param moo multiOmicDataSet containing counts.
-#' @param count_type count type in `moo@counts`.
-#' @param sub_count_type subtype in `moo@counts[[count_type]]` when that entry is a list.
+#' @param moo multiOmicDataSet containing `count_type` & `sub_count_type` in the counts slot
+#' @param count_type the type of counts to use -- must be a name in the counts slot (`moo@counts[[count_type]]`)
+#' @param sub_count_type if `count_type` is a list, specify the sub count type within the list
+#'   (`moo@counts[[count_type]][[sub_count_type]]`). (Default: `NULL`)
 #'
 #' @returns A data frame of counts.
 #' @export
@@ -240,8 +247,8 @@ S7::method(extract_counts, multiOmicDataSet) <- function(
 
 #' Write a multiOmicDataSet to disk as RDS
 #'
-#' @param moo multiOmicDataSet object to serialize.
-#' @param filepath output path for RDS file.
+#' @param moo [multiOmicDataSet] object to serialize
+#' @param filepath Path to the RDS file to write (default: "moo.rds")
 #'
 #' @returns Invisibly returns `filepath`.
 #' @export
@@ -255,7 +262,7 @@ write_multiOmicDataSet <- function(moo, filepath = "moo.rds") {
 
 #' Read a multiOmicDataSet from disk
 #'
-#' @param filepath path to an RDS file produced by [write_multiOmicDataSet()].
+#' @param filepath Path to an RDS file produced by [write_multiOmicDataSet()]
 #'
 #' @returns A `multiOmicDataSet` object.
 #' @export
@@ -269,8 +276,8 @@ read_multiOmicDataSet <- function(filepath) {
 
 #' Write multiOmicDataSet properties to disk
 #'
-#' @param moo multiOmicDataSet object to write.
-#' @param output_dir output directory.
+#' @param moo `multiOmicDataSet` object to write properties from
+#' @param output_dir Directory where the properties will be saved (default: "moo")
 #'
 #' @returns Invisibly returns `output_dir`.
 #' @export

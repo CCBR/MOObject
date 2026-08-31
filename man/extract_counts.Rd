@@ -3,7 +3,7 @@
 \name{extract_counts}
 \alias{extract_counts}
 \alias{extract_counts,MOObject::multiOmicDataSet-method}
-\title{Extract count data from a multiOmicDataSet}
+\title{Extract count data}
 \usage{
 extract_counts(moo, count_type, sub_count_type = NULL)
 
@@ -11,15 +11,16 @@ extract_counts(moo, count_type, sub_count_type = NULL)
 extract_counts(moo, count_type, sub_count_type = NULL)
 }
 \arguments{
-\item{moo}{multiOmicDataSet containing counts.}
+\item{moo}{multiOmicDataSet containing \code{count_type} & \code{sub_count_type} in the counts slot}
 
-\item{count_type}{count type in \code{moo@counts}.}
+\item{count_type}{the type of counts to use -- must be a name in the counts slot (\code{moo@counts[[count_type]]})}
 
-\item{sub_count_type}{subtype in \code{moo@counts[[count_type]]} when that entry is a list.}
+\item{sub_count_type}{if \code{count_type} is a list, specify the sub count type within the list
+(\code{moo@counts[[count_type]][[sub_count_type]]}). (Default: \code{NULL})}
 }
 \value{
 A data frame of counts.
 }
 \description{
-Extract count data from a multiOmicDataSet
+Extract count data
 }
