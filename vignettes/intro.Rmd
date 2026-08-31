@@ -1,0 +1,41 @@
+---
+title: "Introduction to MOObject's multiOmicDataSet"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+MOObject responsibilities:
+- Define and export the S7 class `multiOmicDataSet`.
+- Implement object-focused helpers only: constructors, validators, readers, and writers.
+- Keep dependencies minimal (prefer base + S7 + lightweight IO packages only).
+
+MOSuite responsibilities:
+- Define functions for analysis, modeling, plotting, normalization, filtering, and reporting.
+- Import and operate on `multiOmicDataSet` from MOObject.
+
+## Create a multiOmicDataSet
+
+```{r load}
+library(MOObject)
+moo <- create_multiOmicDataSet_from_files(
+  sample_meta_filepath = 'https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/nidap/Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz',
+  feature_counts_filepath = 'https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/nidap/Raw_Counts.csv.gz'
+)
+```
+
+## The multiOmicDataSet object structure
+
+```{r str_moo}
+str(moo)
+```

@@ -36,3 +36,4 @@ Suggests:
 Config/Needs/dev: cffr, covr, here, lintr, pkgdown,
     rcmdcheck, xml2
 Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr
