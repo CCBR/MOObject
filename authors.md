@@ -16,7 +16,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/CCBR/MOObject/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/CCBR/MOObject/blob/v0.5.0/inst/CITATION)
 
 Sovacool K, Homan P, Koparde V (2026). *MOObject: multiOmicDataSet
 object class for MOSuite*. <https://ccbr.github.io/MOObject/>.
