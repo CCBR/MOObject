@@ -370,11 +370,11 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
 #' from the `analyses/` subdirectory.
 #'
 #' @param input_dir Directory previously created by
-#'   [write_multiOmicDataSet_properties()] (default: `"moo"`).
+#'   [write_multiOmicDataSet_properties()].
 #'
 #' @returns A `multiOmicDataSet` object.
 #' @export
-read_multiOmicDataSet_properties <- function(input_dir = "moo") {
+read_multiOmicDataSet_properties <- function(input_dir) {
   sample_meta <- readr::read_csv(
     file.path(input_dir, "sample_metadata.csv"),
     show_col_types = FALSE
