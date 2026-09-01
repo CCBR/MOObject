@@ -71,7 +71,7 @@ base_url <- paste0(
   "https://raw.githubusercontent.com/CCBR/MOSuite/",
   "refs/tags/v0.4.2/inst/extdata/nidap/"
 )
-sample_meta_filepath <- aste0(
+sample_meta_filepath <- paste0(
   base_url,
   "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
 )
