@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MOObject 🐮 
+# MOObject 🐮
 
 <a href="https://ccbr.github.io/MOSuite/"><img src="https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/logo/mosuite_logo_with_text.png" align="right" width="160" alt="MOSuite website" /></a>
 

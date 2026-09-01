@@ -27,5 +27,10 @@ Authors:
   \item Vishal Koparde \email{vishal.koparde@nih.gov} (\href{https://orcid.org/0000-0001-8978-8495}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item CCR Collaborative Bioinformatics Resource [copyright holder]
+}
+
 }
 \keyword{internal}

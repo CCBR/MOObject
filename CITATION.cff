@@ -13,10 +13,11 @@ identifiers:
 - description: Archived snapshots of all versions
   type: doi
   value: 10.5281/zenodo.16371580
-abstract: MOObject defines the multiOmicDataSet object class which is used in MOSuite
+abstract: 'MOObject defines the multiOmicDataSet object class which is used in MOSuite
   for differential RNA-seq and multi-omics analyses. Separating the MOObject class
   definition from MOSuite allows for lightweight installations in downstream workflows.
-  See the website for more information, documentation, and examples at <https://ccbr.github.io/MOObject/>.
+  See the website for more information: <https://ccbr.github.io/MOObject/>. See the
+  MOSuite website for the most comprehensive documentation: <https://ccbr.github.io/MOSuite/>.'
 authors:
 - family-names: Sovacool
   given-names: Kelly
