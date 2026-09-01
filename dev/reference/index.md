@@ -16,6 +16,8 @@
 
 - [`read_multiOmicDataSet()`](https://ccbr.github.io/MOObject/dev/reference/read_multiOmicDataSet.md)
   : Read a multiOmicDataSet from RDS
+- [`read_multiOmicDataSet_properties()`](https://ccbr.github.io/MOObject/dev/reference/read_multiOmicDataSet_properties.md)
+  : Read multiOmicDataSet properties from individual files.
 - [`write_multiOmicDataSet()`](https://ccbr.github.io/MOObject/dev/reference/write_multiOmicDataSet.md)
   : Write a multiOmicDataSet to RDS
 - [`write_multiOmicDataSet_properties()`](https://ccbr.github.io/MOObject/dev/reference/write_multiOmicDataSet_properties.md)
