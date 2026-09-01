@@ -2,3 +2,12 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^\.pre-commit-config\.yaml$
+^\.github$
+^AGENTS\.md$
+^SECURITY\.md$
+^CITATION\.cff$
+^README\.html$
+^codemeta\.json$
+^_pkgdown.yml$
+^docs$

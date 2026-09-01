@@ -13,13 +13,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MOObject 🐮 <a href="https://ccbr.github.io/MOSuite/"><img src="https://github.com/CCBR/MOSuite/blob/678ac70b8d462cdd153bce11ed89724f7983e759/inst/extdata/logo/mosuite_logo_with_text.png" align="right" height="160" alt="MOSuite website" /></a>
+# MOObject 🐮
+
+<a href="https://ccbr.github.io/MOSuite/"><img src="https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/logo/mosuite_logo_with_text.png" align="right" width="160" alt="MOSuite website" /></a>
 
 multiOmicDataSet object class for MOSuite
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/CCBR/MOObject/graph/badge.svg?token=730OAPA4NU)](https://codecov.io/gh/CCBR/MOObject)
+[![codecov](https://codecov.io/gh/CCBR/MOObject/graph/badge.svg?token=9Ol7vkrqsC)](https://codecov.io/gh/CCBR/MOObject)
 [![CodeQL](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql)
 [![version](https://img.shields.io/github/v/release/ccbr/MOObject)](https://github.com/CCBR/MOObject/releases/latest)
 [![docker](https://img.shields.io/docker/v/nciccbr/mosuite?logo=docker&label=docker&color=blue)](https://hub.docker.com/r/nciccbr/mosuite)
@@ -34,35 +36,85 @@ You can install the development version of MOObject from [GitHub](https://github
 
 ```r
 # install.packages("remotes")
-remotes::install_github("CCBR/MOObject", dependencies = TRUE)
+remotes::install_github("CCBR/MOObject")
 ```
 
+<!--
 Or install a specific version:
 
 ```r
-remotes::install_github("CCBR/MOObject", dependencies = TRUE, ref = "v0.4.1")
+remotes::install_github("CCBR/MOObject", dependencies = TRUE, ref = "v0.5.0")
 ```
 
 There is a Docker container with MOObject + MOSuite installed at <https://hub.docker.com/r/nciccbr/mosuite>.
 You can execute it with your preferred engine such as docker, podman, singularity/apptainer, etc.
 
 ```sh
-podman pull docker://nciccbr/mosuite:v0.4.1
+podman pull docker://nciccbr/mosuite:v0.5.0
 ```
+-->
 
 ## Usage
 
 ### MOObject
 
-TODO example of creating object
+If you only need to read and write multiOmicDataSet objects, MOObject is the
+package you should use to minimize dependencies for your project.
+
+#### MOObject responsibilities:
+
+- Define and export the S7 class `multiOmicDataSet`.
+- Implement object-focused helpers only: constructors, validators, readers, and writers.
+- Keep dependencies minimal (prefer base + S7 + lightweight IO packages only).
+
+```{r create_moo, eval=FALSE}
+library(MOObject)
+
+# create from csv files.
+# example data are included in the MOSuite package.
+base_url <- paste0(
+  "https://raw.githubusercontent.com/CCBR/MOSuite/",
+  "refs/tags/v0.4.2/inst/extdata/nidap/"
+)
+sample_meta_filepath <- aste0(
+  base_url,
+  "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
+)
+feature_counts_filepath <- paste0(base_url, "Raw_Counts.csv.gz")
+
+moo <- create_multiOmicDataSet_from_files(
+  sample_meta_filepath,
+  feature_counts_filepath
+)
+
+# write to Rds
+moo |> write_multiOmicDataSet(filepath = 'moo.rds')
+# write individual components to separate files in a directory
+moo |> write_multiOmicDataSet_properties(output_dir = 'moo')
+
+# read from Rds
+moo <- read_multiOmicDataSet('moo.rds')
+```
 
 ### MOSuite
 
 MOSuite is the main package containing method implementations for bulk-RNA-seq and multi-omics analysis.
 Please see the [introductory vignette](https://ccbr.github.io/MOSuite/articles/intro.html)
-for a quick start tutorial, 
+for a quick start tutorial,
 or take a look at the [reference documentation](https://ccbr.github.io/MOSuite/reference/index.html)
 for detailed information on each function in the package.
+
+MOSuite depends on MOObject and wraps its functions, so if you're already using MOSuite, there's no need to load MOObject too.
+
+```{r mosuite, eval=FALSE}
+library(MOSuite)
+moo <- read_multiOmicDataSet('moo.rds')
+```
+
+#### MOSuite responsibilities:
+
+- Define functions for analysis, modeling, plotting, normalization, filtering, and reporting.
+- Import and operate on `multiOmicDataSet` from MOObject.
 
 ## Help & Contributing
 
