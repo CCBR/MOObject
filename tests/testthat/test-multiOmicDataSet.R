@@ -94,6 +94,25 @@ test_that("read and write rds round-trip", {
   expect_equal(restored@counts$raw, moo@counts$raw)
 })
 
+test_that("write_multiOmicDataSet_properties creates output_dir recursively when missing", {
+  sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
+  raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
+
+  moo <- multiOmicDataSet(
+    sample_metadata = sample_meta,
+    anno_dat = data.frame(gene_id = c("g1", "g2"), stringsAsFactors = FALSE),
+    counts_lst = list(raw = raw)
+  )
+
+  # nested, non-existent subdirectories -- exercises recursive = TRUE
+  out <- file.path(withr::local_tempdir(), "nested", "moo-out")
+  expect_false(dir.exists(out))
+
+  expect_equal(write_multiOmicDataSet_properties(moo, out), out)
+  expect_true(dir.exists(out))
+  expect_true(file.exists(file.path(out, "sample_metadata.csv")))
+})
+
 test_that("write_multiOmicDataSet_properties writes expected files", {
   sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
   raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
@@ -243,6 +262,114 @@ test_that("read_multiOmicDataSet validates its input", {
     read_multiOmicDataSet(path),
     "RDS does not contain a multiOmicDataSet"
   )
+})
+
+test_that("read_multiOmicDataSet_properties round-trip (simple)", {
+  sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
+  raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
+
+  moo <- multiOmicDataSet(
+    sample_metadata = sample_meta,
+    anno_dat = data.frame(gene_id = c("g1", "g2"), stringsAsFactors = FALSE),
+    counts_lst = list(raw = raw),
+    analyses_lst = list(diff = data.frame(gene_id = c("g1"), p = 0.01))
+  )
+
+  out <- withr::local_tempdir(pattern = "moo-roundtrip-")
+  write_multiOmicDataSet_properties(moo, out)
+  restored <- read_multiOmicDataSet_properties(out)
+
+  expect_true(S7::S7_inherits(restored, multiOmicDataSet))
+  expect_equal(
+    as.data.frame(restored@sample_meta),
+    as.data.frame(moo@sample_meta)
+  )
+  expect_equal(
+    as.data.frame(restored@annotation),
+    as.data.frame(moo@annotation)
+  )
+  expect_equal(
+    as.data.frame(restored@counts$raw),
+    as.data.frame(moo@counts$raw)
+  )
+  expect_equal(names(restored@analyses), names(moo@analyses))
+})
+
+test_that("read_multiOmicDataSet_properties round-trip (nested counts + analyses)", {
+  sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
+  raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
+  norm <- list(voom = raw)
+  diff_sub <- data.frame(gene_id = c("g1"), p = 0.01)
+
+  moo <- multiOmicDataSet(
+    sample_metadata = sample_meta,
+    anno_dat = data.frame(gene_id = c("g1", "g2"), stringsAsFactors = FALSE),
+    counts_lst = list(raw = raw, norm = norm),
+    analyses_lst = list(
+      diff = data.frame(gene_id = c("g1"), p = 0.01),
+      model = structure(list(x = 1), class = "some_model"),
+      # nested analysis list with both a data frame and a non-data-frame
+      # sub-item, to exercise both the CSV and RDS branches of
+      # read_analyses_dir_() / write_multiOmicDataSet_properties()
+      grouped = list(
+        contrast1 = diff_sub,
+        contrast2 = structure(list(x = 2), class = "some_model")
+      )
+    )
+  )
+
+  out <- withr::local_tempdir(pattern = "moo-nested-rt-")
+  write_multiOmicDataSet_properties(moo, out)
+  restored <- read_multiOmicDataSet_properties(out)
+
+  expect_true(S7::S7_inherits(restored, multiOmicDataSet))
+  expect_equal(
+    as.data.frame(restored@counts$raw),
+    as.data.frame(moo@counts$raw)
+  )
+  expect_true(is.list(restored@counts$norm))
+  expect_equal(
+    as.data.frame(restored@counts$norm$voom),
+    as.data.frame(moo@counts$norm$voom)
+  )
+  expect_setequal(names(restored@analyses), names(moo@analyses))
+  expect_equal(class(restored@analyses$model), class(moo@analyses$model))
+
+  expect_true(file.exists(file.path(
+    out,
+    "analyses",
+    "grouped",
+    "grouped_contrast1.csv"
+  )))
+  expect_true(file.exists(file.path(
+    out,
+    "analyses",
+    "grouped",
+    "grouped_contrast2.rds"
+  )))
+  expect_true(is.list(restored@analyses$grouped))
+  expect_equal(
+    as.data.frame(restored@analyses$grouped$contrast1),
+    as.data.frame(moo@analyses$grouped$contrast1)
+  )
+  expect_equal(
+    class(restored@analyses$grouped$contrast2),
+    class(moo@analyses$grouped$contrast2)
+  )
+})
+
+test_that("read_counts_dir_ returns an empty list when the directory does not exist", {
+  missing_dir <- file.path(withr::local_tempdir(), "does-not-exist")
+
+  expect_false(dir.exists(missing_dir))
+  expect_equal(read_counts_dir_(missing_dir), list())
+})
+
+test_that("read_analyses_dir_ returns an empty list when the directory does not exist", {
+  missing_dir <- file.path(withr::local_tempdir(), "does-not-exist")
+
+  expect_false(dir.exists(missing_dir))
+  expect_equal(read_analyses_dir_(missing_dir), list())
 })
 
 test_that("write_multiOmicDataSet_properties writes nested counts + analyses", {
