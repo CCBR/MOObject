@@ -65,10 +65,21 @@ the package you should use to minimize dependencies for your project.
 ``` r
 library(MOObject)
 
-# create from csv files
+# create from csv files.
+# example data are included in the MOSuite package.
+base_url <- paste0(
+  "https://raw.githubusercontent.com/CCBR/MOSuite/",
+  "refs/tags/v0.4.2/inst/extdata/nidap/"
+)
+sample_meta_filepath <- aste0(
+  base_url,
+  "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
+)
+feature_counts_filepath <- paste0(base_url, "Raw_Counts.csv.gz")
+
 moo <- create_multiOmicDataSet_from_files(
-  sample_meta_filepath = 'https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/nidap/Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz',
-  feature_counts_filepath = 'https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/nidap/Raw_Counts.csv.gz',
+  sample_meta_filepath,
+  feature_counts_filepath
 )
 
 # write to Rds
