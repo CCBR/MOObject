@@ -34,7 +34,8 @@ Suggests:
     rmarkdown,
     roxygen2 (>= 8.0.0),
     testthat (>= 3.0.0),
-    usethis
+    usethis,
+    withr
 Config/Needs/dev: cffr, covr, here, lintr, pkgdown,
     rcmdcheck, xml2
 Config/roxygen2/version: 8.1.0
