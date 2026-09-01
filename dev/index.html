@@ -65,12 +65,11 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CCBR/MOObject"</span><span class="op">)</span></span></code></pre></div>
+<p>Or install a specific version:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CCBR/MOObject"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span>, ref <span class="op">=</span> <span class="st">"v0.5.0"</span><span class="op">)</span></span></code></pre></div>
 <!--
-Or install a specific version:
-&#10;```r
-remotes::install_github("CCBR/MOObject", dependencies = TRUE, ref = "v0.5.0")
-```
-&#10;There is a Docker container with MOObject + MOSuite installed at <https://hub.docker.com/r/nciccbr/mosuite>.
+There is a Docker container with MOObject + MOSuite installed at <https://hub.docker.com/r/nciccbr/mosuite>.
 You can execute it with your preferred engine such as docker, podman, singularity/apptainer, etc.
 &#10;```sh
 podman pull docker://nciccbr/mosuite:v0.5.0
@@ -92,7 +91,7 @@ podman pull docker://nciccbr/mosuite:v0.5.0
 <li>Implement object-focused helpers only: constructors, validators, readers, and writers.</li>
 <li>Keep dependencies minimal (prefer base + S7 + lightweight IO packages only).</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CCBR/MOObject" class="external-link">MOObject</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create from csv files.</span></span>
@@ -119,14 +118,15 @@ podman pull docker://nciccbr/mosuite:v0.5.0
 <span></span>
 <span><span class="co"># read from Rds</span></span>
 <span><span class="va">moo</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_multiOmicDataSet.html">read_multiOmicDataSet</a></span><span class="op">(</span><span class="st">'moo.rds'</span><span class="op">)</span></span></code></pre></div>
+<p>View the <a href="https://ccbr.github.io/MOObject/reference/index.html">reference</a> for a comprehensive list of functions exported by MOObject.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="mosuite">MOSuite<a class="anchor" aria-label="anchor" href="#mosuite"></a>
 </h3>
 <p>MOSuite is the main package containing method implementations for bulk-RNA-seq and multi-omics analysis. Please see the <a href="https://ccbr.github.io/MOSuite/articles/intro.html" class="external-link">introductory vignette</a> for a quick start tutorial, or take a look at the <a href="https://ccbr.github.io/MOSuite/reference/index.html" class="external-link">reference documentation</a> for detailed information on each function in the package.</p>
-<p>MOSuite depends on MOObject and wraps its functions, so if you’re already using MOSuite, there’s no need to load MOObject too.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>MOSuite depends on MOObject and wraps its functions, so if you’re already using MOSuite, you already have access to everything available in MOObject</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">MOSuite</span><span class="op">)</span></span>
 <span><span class="va">moo</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_multiOmicDataSet.html">read_multiOmicDataSet</a></span><span class="op">(</span><span class="st">'moo.rds'</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
