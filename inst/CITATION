@@ -1,0 +1,19 @@
+bibentry(bibtype = "Manual",
+         key = "sovacool_moobject_2026",
+         title = "{MOObject}: multiOmicDataSet object class for MOSuite",
+         author = c(person(given = "Kelly",
+                           family = "Sovacool",
+                           email = "kelly.sovacool@nih.gov",
+                           comment = c(ORCID = "0000-0003-3283-829X")),
+                    person(given = "Philip",
+                           family = "Homan",
+                           email = "philip.homan@nih.gov"),
+                    person(given = "Vishal",
+                           family = "Koparde",
+                           email = "vishal.koparde@nih.gov",
+                           comment = c(ORCID = "0000-0001-8978-8495"))
+                           ),
+         year = "2026",
+         url = "https://ccbr.github.io/MOObject/",
+         header = "To cite MOOjbect in publications, please use:"
+)
