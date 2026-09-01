@@ -261,9 +261,18 @@ test_that("read_multiOmicDataSet_properties round-trip (simple)", {
   restored <- read_multiOmicDataSet_properties(out)
 
   expect_true(S7::S7_inherits(restored, multiOmicDataSet))
-  expect_equal(as.data.frame(restored@sample_meta), as.data.frame(moo@sample_meta))
-  expect_equal(as.data.frame(restored@annotation), as.data.frame(moo@annotation))
-  expect_equal(as.data.frame(restored@counts$raw), as.data.frame(moo@counts$raw))
+  expect_equal(
+    as.data.frame(restored@sample_meta),
+    as.data.frame(moo@sample_meta)
+  )
+  expect_equal(
+    as.data.frame(restored@annotation),
+    as.data.frame(moo@annotation)
+  )
+  expect_equal(
+    as.data.frame(restored@counts$raw),
+    as.data.frame(moo@counts$raw)
+  )
   expect_equal(names(restored@analyses), names(moo@analyses))
 })
 
@@ -287,9 +296,15 @@ test_that("read_multiOmicDataSet_properties round-trip (nested counts + analyses
   restored <- read_multiOmicDataSet_properties(out)
 
   expect_true(S7::S7_inherits(restored, multiOmicDataSet))
-  expect_equal(as.data.frame(restored@counts$raw), as.data.frame(moo@counts$raw))
+  expect_equal(
+    as.data.frame(restored@counts$raw),
+    as.data.frame(moo@counts$raw)
+  )
   expect_true(is.list(restored@counts$norm))
-  expect_equal(as.data.frame(restored@counts$norm$voom), as.data.frame(moo@counts$norm$voom))
+  expect_equal(
+    as.data.frame(restored@counts$norm$voom),
+    as.data.frame(moo@counts$norm$voom)
+  )
   expect_equal(names(restored@analyses), names(moo@analyses))
   expect_equal(class(restored@analyses$model), class(moo@analyses$model))
 })
