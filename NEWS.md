@@ -1,5 +1,7 @@
 ## MOObject development version
 
+- MOObject is now archived in Zenodo with DOI [10.5281/zenodo.22239360)](https://doi.org/10.5281/zenodo.22239360).
+
 ## MOObject 0.5.0
 
 This is the first release of MOObject! 🎉
