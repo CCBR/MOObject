@@ -38,3 +38,18 @@ A \code{multiOmicDataSet} object.
 \description{
 Construct a multiOmicDataSet object from text files (e.g. TSV, CSV).
 }
+\examples{
+base_url <- paste0(
+  "https://raw.githubusercontent.com/CCBR/MOSuite/",
+  "refs/tags/v0.4.2/inst/extdata/nidap/"
+)
+moo <- create_multiOmicDataSet_from_files(
+  sample_meta_filepath = paste0(
+    base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
+  ),
+  feature_counts_filepath = paste0(base_url, "Raw_Counts.csv.gz")
+)
+head(moo@sample_meta)
+head(moo@counts[['raw']])
+
+}

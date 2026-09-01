@@ -32,3 +32,21 @@ A \code{multiOmicDataSet} object.
 \description{
 Construct a multiOmicDataSet object from data frames
 }
+\examples{
+
+base_url <- paste0(
+  "https://raw.githubusercontent.com/CCBR/MOSuite/",
+  "refs/tags/v0.4.2/inst/extdata/nidap/"
+)
+sample_meta_dat <- readr::read_csv(paste0(
+  base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
+))
+feature_counts_dat <- readr::read_csv(paste0(base_url, "Raw_Counts.csv.gz"))
+moo <- create_multiOmicDataSet_from_dataframes(
+  sample_metadata = sample_meta_dat,
+  counts_dat = feature_counts_dat
+)
+head(moo@sample_meta)
+head(moo@counts[['raw']])
+
+}

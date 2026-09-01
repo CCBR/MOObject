@@ -99,6 +99,52 @@ multiOmicDataSet <- S7::new_class(
   }
 )
 
+#' Construct a multiOmicDataSet object from text files (e.g. TSV, CSV).
+#'
+#' @inheritParams create_multiOmicDataSet_from_dataframes
+#' @param sample_meta_filepath path to text file with sample IDs and metadata for differential analysis.
+#' @param feature_counts_filepath path to text file of expected feature counts (e.g. gene counts from RSEM).
+#' @param delim Delimiter used in the input files. Any delimiter accepted by `readr::read_delim()` can be used.
+#'   If the files are in CSV format, set `delim = ','`; for TSV format, set `delim = '\t'`.
+#' @param ... additional arguments forwarded to `readr::read_delim()`.
+#'
+#' @returns A `multiOmicDataSet` object.
+#' @export
+#' @examples
+#' base_url <- paste0(
+#'   "https://raw.githubusercontent.com/CCBR/MOSuite/",
+#'   "refs/tags/v0.4.2/inst/extdata/nidap/"
+#' )
+#' moo <- create_multiOmicDataSet_from_files(
+#'   sample_meta_filepath = paste0(
+#'     base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
+#'   ),
+#'   feature_counts_filepath = paste0(base_url, "Raw_Counts.csv.gz")
+#' )
+#' head(moo@sample_meta)
+#' head(moo@counts[['raw']])
+#'
+create_multiOmicDataSet_from_files <- function(
+  sample_meta_filepath,
+  feature_counts_filepath,
+  count_type = "raw",
+  sample_id_colname = NULL,
+  feature_id_colname = NULL,
+  delim = NULL,
+  ...
+) {
+  counts_dat <- readr::read_delim(feature_counts_filepath, delim = delim, ...)
+  sample_metadata <- readr::read_delim(sample_meta_filepath, delim = delim, ...)
+
+  create_multiOmicDataSet_from_dataframes(
+    sample_metadata = sample_metadata,
+    counts_dat = counts_dat,
+    sample_id_colname = sample_id_colname,
+    feature_id_colname = feature_id_colname,
+    count_type = count_type
+  )
+}
+
 #' Construct a multiOmicDataSet object from data frames
 #'
 #' @inheritParams multiOmicDataSet
@@ -111,6 +157,23 @@ multiOmicDataSet <- S7::new_class(
 #'
 #' @returns A `multiOmicDataSet` object.
 #' @export
+#' @examples
+#'
+#' base_url <- paste0(
+#'   "https://raw.githubusercontent.com/CCBR/MOSuite/",
+#'   "refs/tags/v0.4.2/inst/extdata/nidap/"
+#' )
+#' sample_meta_dat <- readr::read_csv(paste0(
+#'   base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
+#' ))
+#' feature_counts_dat <- readr::read_csv(paste0(base_url, "Raw_Counts.csv.gz"))
+#' moo <- create_multiOmicDataSet_from_dataframes(
+#'   sample_metadata = sample_meta_dat,
+#'   counts_dat = feature_counts_dat
+#' )
+#' head(moo@sample_meta)
+#' head(moo@counts[['raw']])
+#'
 create_multiOmicDataSet_from_dataframes <- function(
   sample_metadata,
   counts_dat,
@@ -153,37 +216,6 @@ create_multiOmicDataSet_from_dataframes <- function(
   )
 }
 
-#' Construct a multiOmicDataSet object from text files (e.g. TSV, CSV).
-#'
-#' @inheritParams create_multiOmicDataSet_from_dataframes
-#' @param sample_meta_filepath path to text file with sample IDs and metadata for differential analysis.
-#' @param feature_counts_filepath path to text file of expected feature counts (e.g. gene counts from RSEM).
-#' @param delim Delimiter used in the input files. Any delimiter accepted by `readr::read_delim()` can be used.
-#'   If the files are in CSV format, set `delim = ','`; for TSV format, set `delim = '\t'`.
-#' @param ... additional arguments forwarded to `readr::read_delim()`.
-#'
-#' @returns A `multiOmicDataSet` object.
-#' @export
-create_multiOmicDataSet_from_files <- function(
-  sample_meta_filepath,
-  feature_counts_filepath,
-  count_type = "raw",
-  sample_id_colname = NULL,
-  feature_id_colname = NULL,
-  delim = NULL,
-  ...
-) {
-  counts_dat <- readr::read_delim(feature_counts_filepath, delim = delim, ...)
-  sample_metadata <- readr::read_delim(sample_meta_filepath, delim = delim, ...)
-
-  create_multiOmicDataSet_from_dataframes(
-    sample_metadata = sample_metadata,
-    counts_dat = counts_dat,
-    sample_id_colname = sample_id_colname,
-    feature_id_colname = feature_id_colname,
-    count_type = count_type
-  )
-}
 
 #' Write a multiOmicDataSet to RDS
 #'
