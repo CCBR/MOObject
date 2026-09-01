@@ -2,8 +2,8 @@
 
 ## Authors
 
-- **[Kelly Sovacool](https://github.com/kelly-sovacool)**. Author,
-  maintainer. [](https://orcid.org/0000-0003-3283-829X)
+- **Kelly L Sovacool**. Author, maintainer.
+  [](https://orcid.org/0000-0003-3283-829X)
 
 - **[Philip Homan](https://github.com/phoman14)**. Author.
 
@@ -23,7 +23,7 @@ object class for MOSuite*. <https://ccbr.github.io/MOObject/>.
 
     @Manual{sovacool_moobject_2026,
       title = {{MOObject}: multiOmicDataSet object class for MOSuite},
-      author = {Kelly Sovacool and Philip Homan and Vishal Koparde},
+      author = {Kelly L Sovacool and Philip Homan and Vishal Koparde},
       year = {2026},
       url = {https://ccbr.github.io/MOObject/},
     }

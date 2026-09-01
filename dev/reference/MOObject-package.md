@@ -20,12 +20,12 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Kelly Sovacool <kelly.sovacool@nih.gov>
+**Maintainer**: Kelly L Sovacool <kelly.sovacool@nih.gov>
 ([ORCID](https://orcid.org/0000-0003-3283-829X))
 
 Authors:
 
-- Kelly Sovacool <kelly.sovacool@nih.gov>
+- Kelly L Sovacool <kelly.sovacool@nih.gov>
   ([ORCID](https://orcid.org/0000-0003-3283-829X))
 
 - Philip Homan <philip.homan@nih.gov>
