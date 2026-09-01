@@ -245,6 +245,55 @@ test_that("read_multiOmicDataSet validates its input", {
   )
 })
 
+test_that("read_multiOmicDataSet_properties round-trip (simple)", {
+  sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
+  raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
+
+  moo <- multiOmicDataSet(
+    sample_metadata = sample_meta,
+    anno_dat = data.frame(gene_id = c("g1", "g2"), stringsAsFactors = FALSE),
+    counts_lst = list(raw = raw),
+    analyses_lst = list(diff = data.frame(gene_id = c("g1"), p = 0.01))
+  )
+
+  out <- withr::local_tempdir(pattern = "moo-roundtrip-")
+  write_multiOmicDataSet_properties(moo, out)
+  restored <- read_multiOmicDataSet_properties(out)
+
+  expect_true(S7::S7_inherits(restored, multiOmicDataSet))
+  expect_equal(as.data.frame(restored@sample_meta), as.data.frame(moo@sample_meta))
+  expect_equal(as.data.frame(restored@annotation), as.data.frame(moo@annotation))
+  expect_equal(as.data.frame(restored@counts$raw), as.data.frame(moo@counts$raw))
+  expect_equal(names(restored@analyses), names(moo@analyses))
+})
+
+test_that("read_multiOmicDataSet_properties round-trip (nested counts + analyses)", {
+  sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
+  raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
+  norm <- list(voom = raw)
+
+  moo <- multiOmicDataSet(
+    sample_metadata = sample_meta,
+    anno_dat = data.frame(gene_id = c("g1", "g2"), stringsAsFactors = FALSE),
+    counts_lst = list(raw = raw, norm = norm),
+    analyses_lst = list(
+      diff = data.frame(gene_id = c("g1"), p = 0.01),
+      model = structure(list(x = 1), class = "some_model")
+    )
+  )
+
+  out <- withr::local_tempdir(pattern = "moo-nested-rt-")
+  write_multiOmicDataSet_properties(moo, out)
+  restored <- read_multiOmicDataSet_properties(out)
+
+  expect_true(S7::S7_inherits(restored, multiOmicDataSet))
+  expect_equal(as.data.frame(restored@counts$raw), as.data.frame(moo@counts$raw))
+  expect_true(is.list(restored@counts$norm))
+  expect_equal(as.data.frame(restored@counts$norm$voom), as.data.frame(moo@counts$norm$voom))
+  expect_equal(names(restored@analyses), names(moo@analyses))
+  expect_equal(class(restored@analyses$model), class(moo@analyses$model))
+})
+
 test_that("write_multiOmicDataSet_properties writes nested counts + analyses", {
   sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
   raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))

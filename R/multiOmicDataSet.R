@@ -361,6 +361,129 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
   invisible(output_dir)
 }
 
+#' Read multiOmicDataSet properties from individual files.
+#'
+#' Reads a directory created by [write_multiOmicDataSet_properties()] and
+#' reconstructs the `multiOmicDataSet` object.  The `sample_meta` and
+#' `annotation` properties are read from CSV files, the `counts` property is
+#' read from the `counts/` subdirectory, and the `analyses` property is read
+#' from the `analyses/` subdirectory.
+#'
+#' @param input_dir Directory previously created by
+#'   [write_multiOmicDataSet_properties()] (default: `"moo"`).
+#'
+#' @returns A `multiOmicDataSet` object.
+#' @export
+read_multiOmicDataSet_properties <- function(input_dir = "moo") {
+  sample_meta <- readr::read_csv(
+    file.path(input_dir, "sample_metadata.csv"),
+    show_col_types = FALSE
+  )
+  annotation <- readr::read_csv(
+    file.path(input_dir, "feature_annotation.csv"),
+    show_col_types = FALSE
+  )
+
+  counts_dir <- file.path(input_dir, "counts")
+  counts_lst <- read_counts_dir_(counts_dir)
+
+  analyses_dir <- file.path(input_dir, "analyses")
+  analyses_lst <- read_analyses_dir_(analyses_dir)
+
+  multiOmicDataSet(
+    sample_metadata = as.data.frame(sample_meta),
+    anno_dat = as.data.frame(annotation),
+    counts_lst = counts_lst,
+    analyses_lst = analyses_lst
+  )
+}
+
+#' Read counts from a directory written by write_multiOmicDataSet_properties
+#'
+#' @param counts_dir Path to the `counts/` subdirectory.
+#'
+#' @returns A named list of data frames (and nested lists for sub-count types).
+#' @keywords internal
+read_counts_dir_ <- function(counts_dir) {
+  counts_lst <- list()
+
+  if (!dir.exists(counts_dir)) {
+    return(counts_lst)
+  }
+
+  entries <- list.files(counts_dir, full.names = FALSE)
+  for (entry in entries) {
+    full_path <- file.path(counts_dir, entry)
+    if (dir.exists(full_path)) {
+      count_type <- entry
+      sub_files <- list.files(full_path, pattern = "\\.csv$", full.names = TRUE)
+      sub_lst <- list()
+      for (sf in sub_files) {
+        sub_name <- sub("_counts\\.csv$", "", basename(sf))
+        sub_lst[[sub_name]] <- as.data.frame(
+          readr::read_csv(sf, show_col_types = FALSE)
+        )
+      }
+      counts_lst[[count_type]] <- sub_lst
+    } else if (grepl("_counts\\.csv$", entry)) {
+      count_type <- sub("_counts\\.csv$", "", entry)
+      counts_lst[[count_type]] <- as.data.frame(
+        readr::read_csv(full_path, show_col_types = FALSE)
+      )
+    }
+  }
+
+  counts_lst
+}
+
+#' Read analyses from a directory written by write_multiOmicDataSet_properties
+#'
+#' @param analyses_dir Path to the `analyses/` subdirectory.
+#'
+#' @returns A named list of data frames, lists, or arbitrary R objects.
+#' @keywords internal
+read_analyses_dir_ <- function(analyses_dir) {
+  analyses_lst <- list()
+
+  if (!dir.exists(analyses_dir)) {
+    return(analyses_lst)
+  }
+
+  entries <- list.files(analyses_dir, full.names = FALSE)
+  for (entry in entries) {
+    full_path <- file.path(analyses_dir, entry)
+    if (dir.exists(full_path)) {
+      analysis_name <- entry
+      sub_files <- list.files(full_path, full.names = TRUE)
+      sub_lst <- list()
+      for (sf in sub_files) {
+        sf_base <- basename(sf)
+        prefix <- paste0(analysis_name, "_")
+        if (grepl("\\.csv$", sf_base)) {
+          sub_name <- sub("\\.csv$", "", sub(paste0("^", prefix), "", sf_base))
+          sub_lst[[sub_name]] <- as.data.frame(
+            readr::read_csv(sf, show_col_types = FALSE)
+          )
+        } else if (grepl("\\.rds$", sf_base)) {
+          sub_name <- sub("\\.rds$", "", sub(paste0("^", prefix), "", sf_base))
+          sub_lst[[sub_name]] <- readRDS(sf)
+        }
+      }
+      analyses_lst[[analysis_name]] <- sub_lst
+    } else if (grepl("\\.csv$", entry)) {
+      analysis_name <- sub("\\.csv$", "", entry)
+      analyses_lst[[analysis_name]] <- as.data.frame(
+        readr::read_csv(full_path, show_col_types = FALSE)
+      )
+    } else if (grepl("\\.rds$", entry)) {
+      analysis_name <- sub("\\.rds$", "", entry)
+      analyses_lst[[analysis_name]] <- readRDS(full_path)
+    }
+  }
+
+  analyses_lst
+}
+
 #' Extract count data
 #'
 #' @param moo multiOmicDataSet containing `count_type` & `sub_count_type` in the counts slot
