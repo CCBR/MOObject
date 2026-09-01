@@ -14,7 +14,7 @@ multiOmicDataSet object class for MOSuite
 [![CodeQL](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/CCBR/MOObject/actions/workflows/github-code-scanning/codeql)
 [![version](https://img.shields.io/github/v/release/ccbr/MOObject)](https://github.com/CCBR/MOObject/releases/latest)
 [![docker](https://img.shields.io/docker/v/nciccbr/mosuite?logo=docker&label=docker&color=blue)](https://hub.docker.com/r/nciccbr/mosuite)
-<!--[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16371580.svg)](https://doi.org/10.5281/zenodo.16371580)-->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22239360.svg)](https://doi.org/10.5281/zenodo.22239360)
 <!-- badges: end -->
 
 MOObject defines the multiOmicDataSet object class which is used in
