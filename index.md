@@ -23,6 +23,12 @@ You can install the development version of MOObject from
 remotes::install_github("CCBR/MOObject")
 ```
 
+Or install a specific version:
+
+``` r
+remotes::install_github("CCBR/MOObject", dependencies = TRUE, ref = "v0.5.0")
+```
+
 ## Usage
 
 ### MOObject
@@ -67,6 +73,10 @@ moo |> write_multiOmicDataSet_properties(output_dir = 'moo')
 moo <- read_multiOmicDataSet('moo.rds')
 ```
 
+View the
+[reference](https://ccbr.github.io/MOObject/reference/index.html) for a
+comprehensive list of functions exported by MOObject.
+
 ### MOSuite
 
 MOSuite is the main package containing method implementations for
@@ -77,7 +87,8 @@ documentation](https://ccbr.github.io/MOSuite/reference/index.html) for
 detailed information on each function in the package.
 
 MOSuite depends on MOObject and wraps its functions, so if you’re
-already using MOSuite, there’s no need to load MOObject too.
+already using MOSuite, you already have access to everything available
+in MOObject
 
 ``` r
 library(MOSuite)
