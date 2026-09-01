@@ -4,11 +4,11 @@
 \alias{read_multiOmicDataSet_properties}
 \title{Read multiOmicDataSet properties from individual files.}
 \usage{
-read_multiOmicDataSet_properties(input_dir = "moo")
+read_multiOmicDataSet_properties(input_dir)
 }
 \arguments{
 \item{input_dir}{Directory previously created by
-\code{\link[=write_multiOmicDataSet_properties]{write_multiOmicDataSet_properties()}} (default: \code{"moo"}).}
+\code{\link[=write_multiOmicDataSet_properties]{write_multiOmicDataSet_properties()}}.}
 }
 \value{
 A \code{multiOmicDataSet} object.
