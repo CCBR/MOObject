@@ -58,11 +58,12 @@ jobs:
         run: |
           # See https://docs.ropensci.org/cffr/articles/cffr.html
           library(cffr)
-          mykeys <- list(identifiers = list(list(
-             description = "Archived snapshots of all versions",
-             type = "doi",
-             value = "10.5281/zenodo.16371580"
-          )))
+          mykeys <- list()
+          # mykeys <- list(identifiers = list(list(
+          #    description = "Archived snapshots of all versions",
+          #    type = "doi",
+          #    value = "10.5281/zenodo.16371580"
+          # )))
           cf <- cff_create(keys = mykeys)
           # Create your CITATION.cff file
           cff_write(cf)

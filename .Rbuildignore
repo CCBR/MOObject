@@ -9,5 +9,5 @@
 ^CITATION\.cff$
 ^README\.html$
 ^codemeta\.json$
-^_pkgdown$
+^_pkgdown.yml$
 ^docs$

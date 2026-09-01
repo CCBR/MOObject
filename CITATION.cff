@@ -9,10 +9,6 @@ type: software
 license: MIT
 title: 'MOObject: multiOmicDataSet object class for MOSuite'
 version: 0.4.1.9000
-identifiers:
-- description: Archived snapshots of all versions
-  type: doi
-  value: 10.5281/zenodo.16371580
 abstract: 'MOObject defines the multiOmicDataSet object class which is used in MOSuite
   for differential RNA-seq and multi-omics analyses. Separating the MOObject class
   definition from MOSuite allows for lightweight installations in downstream workflows.
