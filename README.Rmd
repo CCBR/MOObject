@@ -107,7 +107,7 @@ for a quick start tutorial,
 or take a look at the [reference documentation](https://ccbr.github.io/MOSuite/reference/index.html)
 for detailed information on each function in the package.
 
-MOSuite depends on MOObject and wraps its functions, 
+MOSuite depends on MOObject and wraps its functions,
 so if you're already using MOSuite,
 you already have access to everything available in MOObject
 

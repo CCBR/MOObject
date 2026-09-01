@@ -8,7 +8,7 @@ message: 'To cite package "MOObject" in publications use:'
 type: software
 license: MIT
 title: 'MOObject: multiOmicDataSet object class for MOSuite'
-version: 0.5.0.9000
+version: 0.5.0
 abstract: 'MOObject defines the multiOmicDataSet object class which is used in MOSuite
   for differential RNA-seq and multi-omics analyses. Separating the MOObject class
   definition from MOSuite allows for lightweight installations in downstream workflows.
