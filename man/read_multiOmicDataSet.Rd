@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiOmicDataSet.R
 \name{read_multiOmicDataSet}
 \alias{read_multiOmicDataSet}
-\title{Read a multiOmicDataSet from disk}
+\title{Read a multiOmicDataSet from RDS}
 \usage{
 read_multiOmicDataSet(filepath)
 }
@@ -13,5 +13,5 @@ read_multiOmicDataSet(filepath)
 A \code{multiOmicDataSet} object.
 }
 \description{
-Read a multiOmicDataSet from disk
+Read a multiOmicDataSet from RDS
 }

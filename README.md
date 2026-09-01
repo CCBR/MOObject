@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# MOObject 🐮 <a href="https://ccbr.github.io/MOSuite/"><img src="https://github.com/CCBR/MOSuite/blob/678ac70b8d462cdd153bce11ed89724f7983e759/inst/extdata/logo/mosuite_logo_with_text.png" align="right" height="160" alt="MOSuite website" /></a>
+# MOObject 🐮
+
+<a href="https://ccbr.github.io/MOSuite/"><img src="https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/logo/mosuite_logo_with_text.png" align="right" width="160" alt="MOSuite website" /></a>
 
 multiOmicDataSet object class for MOSuite
 
@@ -49,19 +51,33 @@ podman pull docker://nciccbr/mosuite:v0.5.0
 
 ### MOObject
 
+If you only need to read and write multiOmicDataSet objects, MOObject is
+the package you should use to minimize dependencies for your project.
+
+#### MOObject responsibilities:
+
+- Define and export the S7 class `multiOmicDataSet`.
+- Implement object-focused helpers only: constructors, validators,
+  readers, and writers.
+- Keep dependencies minimal (prefer base + S7 + lightweight IO packages
+  only).
+
 ``` r
 library(MOObject)
+
+# create from csv files
 moo <- create_multiOmicDataSet_from_files(
-  sample_meta_filepath = 'path/to/samplesheet.csv',
-  feature_counts_filepath = 'path/to/counts.csv',
-  delim = ','
+  sample_meta_filepath = 'https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/nidap/Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz',
+  feature_counts_filepath = 'https://raw.githubusercontent.com/CCBR/MOSuite/refs/tags/v0.4.2/inst/extdata/nidap/Raw_Counts.csv.gz',
 )
-# use MOSuite for analysis
 
 # write to Rds
 moo |> write_multiOmicDataSet(filepath = 'moo.rds')
 # write individual components to separate files in a directory
 moo |> write_multiOmicDataSet_properties(output_dir = 'moo')
+
+# read from Rds
+moo <- read_multiOmicDataSet('moo.rds')
 ```
 
 ### MOSuite
@@ -72,6 +88,20 @@ vignette](https://ccbr.github.io/MOSuite/articles/intro.html) for a
 quick start tutorial, or take a look at the [reference
 documentation](https://ccbr.github.io/MOSuite/reference/index.html) for
 detailed information on each function in the package.
+
+MOSuite depends on MOObject and wraps its functions, so if you’re
+already using MOSuite, there’s no need to load MOObject too.
+
+``` r
+library(MOSuite)
+moo <- read_multiOmicDataSet('moo.rds')
+```
+
+#### MOSuite responsibilities:
+
+- Define functions for analysis, modeling, plotting, normalization,
+  filtering, and reporting.
+- Import and operate on `multiOmicDataSet` from MOObject.
 
 ## Help & Contributing
 

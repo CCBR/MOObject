@@ -185,67 +185,7 @@ create_multiOmicDataSet_from_files <- function(
   )
 }
 
-#' Extract count data
-#'
-#' @param moo multiOmicDataSet containing `count_type` & `sub_count_type` in the counts slot
-#' @param count_type the type of counts to use -- must be a name in the counts slot (`moo@counts[[count_type]]`)
-#' @param sub_count_type if `count_type` is a list, specify the sub count type within the list
-#'   (`moo@counts[[count_type]][[sub_count_type]]`). (Default: `NULL`)
-#'
-#' @returns A data frame of counts.
-#' @export
-extract_counts <- S7::new_generic(
-  name = "extract_counts",
-  dispatch_args = "moo",
-  fun = function(moo, count_type, sub_count_type = NULL) {
-    S7::S7_dispatch()
-  }
-)
-
-#' @rdname extract_counts
-S7::method(extract_counts, multiOmicDataSet) <- function(
-  moo,
-  count_type,
-  sub_count_type = NULL
-) {
-  if (!(count_type %in% names(moo@counts))) {
-    stop(
-      glue::glue(
-        "count_type {count_type} not in moo@counts. Count types: {glue::glue_collapse(names(moo@counts), sep = ', ')}"
-      )
-    )
-  }
-
-  counts_dat <- moo@counts[[count_type]]
-
-  if (!is.null(sub_count_type)) {
-    if (!inherits(counts_dat, "list")) {
-      stop(
-        glue::glue(
-          "{count_type} counts does not contain subtypes. Set sub_count_type to NULL"
-        )
-      )
-    }
-    if (!(sub_count_type %in% names(counts_dat))) {
-      stop(
-        glue::glue(
-          "sub_count_type {sub_count_type} is not in moo@counts[[{count_type}]]"
-        )
-      )
-    }
-    counts_dat <- counts_dat[[sub_count_type]]
-  } else if (inherits(counts_dat, "list")) {
-    stop(
-      glue::glue(
-        "{count_type} counts contains subtypes. Set sub_count_type to extract one"
-      )
-    )
-  }
-
-  counts_dat
-}
-
-#' Write a multiOmicDataSet to disk as RDS
+#' Write a multiOmicDataSet to RDS
 #'
 #' @param moo [multiOmicDataSet] object to serialize
 #' @param filepath Path to the RDS file to write (default: "moo.rds")
@@ -260,7 +200,7 @@ write_multiOmicDataSet <- function(moo, filepath = "moo.rds") {
   invisible(filepath)
 }
 
-#' Read a multiOmicDataSet from disk
+#' Read a multiOmicDataSet from RDS
 #'
 #' @param filepath Path to an RDS file produced by [write_multiOmicDataSet()]
 #'
@@ -274,7 +214,12 @@ read_multiOmicDataSet <- function(filepath) {
   moo
 }
 
-#' Write multiOmicDataSet properties to disk
+#' Write multiOmicDataSet properties to individual files.
+#'
+#' The `sample_meta` and `annotation` properties are written to CSV files, the
+#' `counts` property is written to a subdirectory of CSV files, and the
+#' `analyses` property is written to a subdirectory of CSV or RDS files
+#' depending on the type of each analysis result.
 #'
 #' @param moo `multiOmicDataSet` object to write properties from
 #' @param output_dir Directory where the properties will be saved (default: "moo")
@@ -382,4 +327,64 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
   }
 
   invisible(output_dir)
+}
+
+#' Extract count data
+#'
+#' @param moo multiOmicDataSet containing `count_type` & `sub_count_type` in the counts slot
+#' @param count_type the type of counts to use -- must be a name in the counts slot (`moo@counts[[count_type]]`)
+#' @param sub_count_type if `count_type` is a list, specify the sub count type within the list
+#'   (`moo@counts[[count_type]][[sub_count_type]]`). (Default: `NULL`)
+#'
+#' @returns A data frame of counts.
+#' @export
+extract_counts <- S7::new_generic(
+  name = "extract_counts",
+  dispatch_args = "moo",
+  fun = function(moo, count_type, sub_count_type = NULL) {
+    S7::S7_dispatch()
+  }
+)
+
+#' @rdname extract_counts
+S7::method(extract_counts, multiOmicDataSet) <- function(
+  moo,
+  count_type,
+  sub_count_type = NULL
+) {
+  if (!(count_type %in% names(moo@counts))) {
+    stop(
+      glue::glue(
+        "count_type {count_type} not in moo@counts. Count types: {glue::glue_collapse(names(moo@counts), sep = ', ')}"
+      )
+    )
+  }
+
+  counts_dat <- moo@counts[[count_type]]
+
+  if (!is.null(sub_count_type)) {
+    if (!inherits(counts_dat, "list")) {
+      stop(
+        glue::glue(
+          "{count_type} counts does not contain subtypes. Set sub_count_type to NULL"
+        )
+      )
+    }
+    if (!(sub_count_type %in% names(counts_dat))) {
+      stop(
+        glue::glue(
+          "sub_count_type {sub_count_type} is not in moo@counts[[{count_type}]]"
+        )
+      )
+    }
+    counts_dat <- counts_dat[[sub_count_type]]
+  } else if (inherits(counts_dat, "list")) {
+    stop(
+      glue::glue(
+        "{count_type} counts contains subtypes. Set sub_count_type to extract one"
+      )
+    )
+  }
+
+  counts_dat
 }

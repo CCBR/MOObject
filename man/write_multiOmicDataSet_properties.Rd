@@ -3,7 +3,7 @@
 \name{write_multiOmicDataSet_properties}
 \alias{write_multiOmicDataSet_properties}
 \alias{write_multiOmicDataSet_properties,MOObject::multiOmicDataSet-method}
-\title{Write multiOmicDataSet properties to disk}
+\title{Write multiOmicDataSet properties to individual files.}
 \usage{
 write_multiOmicDataSet_properties(moo, output_dir = "moo")
 
@@ -19,5 +19,8 @@ write_multiOmicDataSet_properties(moo, output_dir = "moo")
 Invisibly returns \code{output_dir}.
 }
 \description{
-Write multiOmicDataSet properties to disk
+The \code{sample_meta} and \code{annotation} properties are written to CSV files, the
+\code{counts} property is written to a subdirectory of CSV files, and the
+\code{analyses} property is written to a subdirectory of CSV or RDS files
+depending on the type of each analysis result.
 }

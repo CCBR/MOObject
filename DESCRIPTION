@@ -6,14 +6,16 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-3283-829X")),
     person("Philip", "Homan", , "philip.homan@nih.gov", role = "aut"),
     person("Vishal", "Koparde", , "vishal.koparde@nih.gov", role = "aut",
-           comment = c(ORCID = "0000-0001-8978-8495"))
+           comment = c(ORCID = "0000-0001-8978-8495")),
+    person("CCR Collaborative Bioinformatics Resource", role = "cph")
   )
 Description: MOObject defines the multiOmicDataSet object class which is used in
     MOSuite for differential RNA-seq and multi-omics analyses.
     Separating the MOObject class definition from MOSuite allows for lightweight
     installations in downstream workflows.
-    See the website for more information,
-    documentation, and examples at <https://ccbr.github.io/MOObject/>.
+    See the website for more information: <https://ccbr.github.io/MOObject/>.
+    See the MOSuite website for the most comprehensive documentation:
+    <https://ccbr.github.io/MOSuite/>.
 License: MIT + file LICENSE
 URL: https://github.com/CCBR/MOObject, https://ccbr.github.io/MOObject/
 BugReports: https://github.com/CCBR/MOObject/issues

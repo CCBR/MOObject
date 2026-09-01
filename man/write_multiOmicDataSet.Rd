@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiOmicDataSet.R
 \name{write_multiOmicDataSet}
 \alias{write_multiOmicDataSet}
-\title{Write a multiOmicDataSet to disk as RDS}
+\title{Write a multiOmicDataSet to RDS}
 \usage{
 write_multiOmicDataSet(moo, filepath = "moo.rds")
 }
@@ -15,5 +15,5 @@ write_multiOmicDataSet(moo, filepath = "moo.rds")
 Invisibly returns \code{filepath}.
 }
 \description{
-Write a multiOmicDataSet to disk as RDS
+Write a multiOmicDataSet to RDS
 }
