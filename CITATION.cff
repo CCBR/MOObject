@@ -8,7 +8,7 @@ message: 'To cite package "MOObject" in publications use:'
 type: software
 license: MIT
 title: 'MOObject: multiOmicDataSet object class for MOSuite'
-version: 0.4.1.9000
+version: 0.5.0
 abstract: 'MOObject defines the multiOmicDataSet object class which is used in MOSuite
   for differential RNA-seq and multi-omics analyses. Separating the MOObject class
   definition from MOSuite allows for lightweight installations in downstream workflows.
@@ -16,7 +16,7 @@ abstract: 'MOObject defines the multiOmicDataSet object class which is used in M
   MOSuite website for the most comprehensive documentation: <https://ccbr.github.io/MOSuite/>.'
 authors:
 - family-names: Sovacool
-  given-names: Kelly
+  given-names: Kelly L
   email: kelly.sovacool@nih.gov
   orcid: https://orcid.org/0000-0003-3283-829X
 - family-names: Homan
@@ -31,7 +31,7 @@ preferred-citation:
   title: 'MOObject: multiOmicDataSet object class for MOSuite'
   authors:
   - family-names: Sovacool
-    given-names: Kelly
+    given-names: Kelly L
     email: kelly.sovacool@nih.gov
     orcid: https://orcid.org/0000-0003-3283-829X
   - family-names: Homan
@@ -47,7 +47,7 @@ repository-code: https://github.com/CCBR/MOObject
 url: https://ccbr.github.io/MOObject/
 contact:
 - family-names: Sovacool
-  given-names: Kelly
+  given-names: Kelly L
   email: kelly.sovacool@nih.gov
   orcid: https://orcid.org/0000-0003-3283-829X
 references:

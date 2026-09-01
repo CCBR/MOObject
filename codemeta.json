@@ -6,7 +6,7 @@
       "@id": "https://orcid.org/0000-0003-3283-829X",
       "@type": "Person",
       "familyName": "Sovacool",
-      "givenName": "Kelly"
+      "givenName": "Kelly L"
     },
     {
       "@type": "Person",
@@ -25,5 +25,5 @@
   "license": "https://spdx.org/licenses/MIT",
   "name": "MOObject: multiOmicDataSet object class for MOSuite",
   "url": "https://ccbr.github.io/MOObject/",
-  "version": "0.4.1.9000"
+  "version": "0.5.0"
 }
