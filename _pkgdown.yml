@@ -31,10 +31,22 @@ authors:
     roles: [cph, fnd]
     text: "Created by the"
 
+navbar:
+  left:
+    - text: Reference
+      href: reference/index.html
+    - text: Changelog
+      href: news/index.html
+    - text: MOSuite
+      icon: fa-arrow-up-right-from-square
+      href: https://ccbr.github.io/MOSuite/
+      target: _blank
+
 
 reference:
-- title: multiOmicDataSet
-  contents: contains("multiOmicDataSet")
+- title: multiOmicDataSet class
+  contents: 
+    - multiOmicDataSet
 - title: Constructors
   contents: starts_with("create")
 - title: Read & Write
