@@ -1,6 +1,6 @@
 Package: MOObject
 Title: multiOmicDataSet object class for MOSuite
-Version: 0.5.0.9000
+Version: 0.5.0
 Authors@R: c(
     person("Kelly L", "Sovacool", , "kelly.sovacool@nih.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3283-829X")),
