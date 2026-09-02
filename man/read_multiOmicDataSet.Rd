@@ -10,8 +10,31 @@ read_multiOmicDataSet(filepath)
 \item{filepath}{Path to an RDS file produced by \code{\link[=write_multiOmicDataSet]{write_multiOmicDataSet()}}}
 }
 \value{
-A \code{multiOmicDataSet} object.
+A \link{multiOmicDataSet} object.
 }
 \description{
 Read a multiOmicDataSet from RDS
 }
+\examples{
+sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
+)
+moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+filepath <- tempfile(fileext = ".rds")
+write_multiOmicDataSet(moo, filepath)
+moo2 <- read_multiOmicDataSet(filepath)
+}
+\seealso{
+Other moo:
+\code{\link[=create_multiOmicDataSet_from_dataframes]{create_multiOmicDataSet_from_dataframes()}},
+\code{\link[=create_multiOmicDataSet_from_files]{create_multiOmicDataSet_from_files()}},
+\code{\link[=extract_counts]{extract_counts()}},
+\code{\link[=multiOmicDataSet]{multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet_properties]{read_multiOmicDataSet_properties()}},
+\code{\link[=write_multiOmicDataSet]{write_multiOmicDataSet()}},
+\code{\link[=write_multiOmicDataSet_properties]{write_multiOmicDataSet_properties()}}
+}
+\concept{moo}

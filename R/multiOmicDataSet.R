@@ -11,21 +11,50 @@
 #'
 #' @prop sample_meta sample metadata as a data frame or tibble. The first column is assumed to contain the sample
 #'   IDs which must correspond to column names in the raw counts.
-#' @prop annotation data frame of feature annotations, such as gene symbols or any other information about the
-#'   features in the counts list.
 #' @prop counts named list of counts data frames (e.g. `raw`, `clean`, `cpm`, `filt`, `norm`, `batch`). Each data
 #'   frame is expected to contain a feature ID column as the first column, and all remaining columns are sample IDs.
+#' @prop annotation data frame of feature annotations, such as gene symbols or any other information about the
+#'   features in the counts list.
 #' @prop analyses named list of analysis results (e.g. DESeq2 results, colors).
 #'
-#' @returns A `multiOmicDataSet` S7 object.
+#' @returns A [multiOmicDataSet] S7 object.
 #' @export
+#' @family moo
+#' @examples
+#' # sample metadata (sample names, labels, groups, batches, etc.)
+#' sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' # counts data such as from bulk RNA-seq
+#' counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
+#' )
+#' # annotations for the counts data such as alternative gene names, gene IDs, etc.
+#' anno_dat <- data.frame(feature_id = c("gene1", "gene2"), ensembl_id = c('ENSG000001', 'ENSG000002'))
+#'
+#' # construct a multiOmicDataSet object
+#' moo <- multiOmicDataSet(
+#'   sample_metadata = sample_metadata,
+#'   counts_lst = list(raw = counts_dat),
+#'   anno_dat = anno_dat
+#' )
+#' moo
+#' S7::S7_class(moo)
+#'
+#' # validate the object
+#' S7::validate(moo)
+#'
+#' # Retrieve properties from the object
+#' head(moo@sample_meta)
+#' # Set properties in the object
+#' moo@sample_meta$batch <- c("C", "D")
 multiOmicDataSet <- S7::new_class(
   name = "multiOmicDataSet",
   package = "MOObject",
   properties = list(
     sample_meta = S7::class_data.frame,
-    annotation = S7::class_data.frame,
     counts = S7::class_list,
+    annotation = S7::class_data.frame,
     analyses = S7::class_list
   ),
   constructor = function(
@@ -108,18 +137,25 @@ multiOmicDataSet <- S7::new_class(
 #'   If the files are in CSV format, set `delim = ','`; for TSV format, set `delim = '\t'`.
 #' @param ... additional arguments forwarded to `readr::read_delim()`.
 #'
-#' @returns A `multiOmicDataSet` object.
+#' @returns A [multiOmicDataSet] object.
 #' @export
+#' @family moo
 #' @examples
-#' base_url <- paste0(
-#'   "https://raw.githubusercontent.com/CCBR/MOSuite/",
-#'   "refs/tags/v0.4.2/inst/extdata/nidap/"
+#' sample_meta_dat <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' feature_counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
 #' )
+#' sample_meta_filepath <- tempfile(fileext = ".csv")
+#' feature_counts_filepath <- tempfile(fileext = ".csv")
+#' readr::write_csv(sample_meta_dat, sample_meta_filepath)
+#' readr::write_csv(feature_counts_dat, feature_counts_filepath)
+#'
 #' moo <- create_multiOmicDataSet_from_files(
-#'   sample_meta_filepath = paste0(
-#'     base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
-#'   ),
-#'   feature_counts_filepath = paste0(base_url, "Raw_Counts.csv.gz")
+#'   sample_meta_filepath = sample_meta_filepath,
+#'   feature_counts_filepath = feature_counts_filepath,
+#'   delim = ","
 #' )
 #' head(moo@sample_meta)
 #' head(moo@counts[['raw']])
@@ -155,18 +191,17 @@ create_multiOmicDataSet_from_files <- function(
 #'   column in the count data will be used.)
 #' @param count_type type to assign the values of `counts_dat` to in the `counts` slot
 #'
-#' @returns A `multiOmicDataSet` object.
+#' @returns A [multiOmicDataSet] object.
 #' @export
+#' @family moo
 #' @examples
 #'
-#' base_url <- paste0(
-#'   "https://raw.githubusercontent.com/CCBR/MOSuite/",
-#'   "refs/tags/v0.4.2/inst/extdata/nidap/"
+#' sample_meta_dat <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' feature_counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
 #' )
-#' sample_meta_dat <- readr::read_csv(paste0(
-#'   base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
-#' ))
-#' feature_counts_dat <- readr::read_csv(paste0(base_url, "Raw_Counts.csv.gz"))
 #' moo <- create_multiOmicDataSet_from_dataframes(
 #'   sample_metadata = sample_meta_dat,
 #'   counts_dat = feature_counts_dat
@@ -224,6 +259,17 @@ create_multiOmicDataSet_from_dataframes <- function(
 #'
 #' @returns Invisibly returns `filepath`.
 #' @export
+#' @family moo
+#' @examples
+#' sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
+#' )
+#' moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+#' filepath <- tempfile(fileext = ".rds")
+#' write_multiOmicDataSet(moo, filepath)
 write_multiOmicDataSet <- function(moo, filepath = "moo.rds") {
   if (!inherits(moo, multiOmicDataSet)) {
     stop("moo must be a multiOmicDataSet")
@@ -236,8 +282,20 @@ write_multiOmicDataSet <- function(moo, filepath = "moo.rds") {
 #'
 #' @param filepath Path to an RDS file produced by [write_multiOmicDataSet()]
 #'
-#' @returns A `multiOmicDataSet` object.
+#' @returns A [multiOmicDataSet] object.
 #' @export
+#' @family moo
+#' @examples
+#' sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
+#' )
+#' moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+#' filepath <- tempfile(fileext = ".rds")
+#' write_multiOmicDataSet(moo, filepath)
+#' moo2 <- read_multiOmicDataSet(filepath)
 read_multiOmicDataSet <- function(filepath) {
   moo <- readr::read_rds(filepath)
   if (!inherits(moo, multiOmicDataSet)) {
@@ -253,11 +311,22 @@ read_multiOmicDataSet <- function(filepath) {
 #' `analyses` property is written to a subdirectory of CSV or RDS files
 #' depending on the type of each analysis result.
 #'
-#' @param moo `multiOmicDataSet` object to write properties from
+#' @param moo [multiOmicDataSet] object to write properties from
 #' @param output_dir Directory where the properties will be saved (default: "moo")
 #'
 #' @returns Invisibly returns `output_dir`.
 #' @export
+#' @family moo
+#' @examples
+#' sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
+#' )
+#' moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+#' output_dir <- tempfile()
+#' write_multiOmicDataSet_properties(moo, output_dir)
 write_multiOmicDataSet_properties <- S7::new_generic(
   name = "write_multiOmicDataSet_properties",
   dispatch_args = "moo",
@@ -364,7 +433,7 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
 #' Read multiOmicDataSet properties from individual files.
 #'
 #' Reads a directory created by [write_multiOmicDataSet_properties()] and
-#' reconstructs the `multiOmicDataSet` object.  The `sample_meta` and
+#' reconstructs the [multiOmicDataSet] object.  The `sample_meta` and
 #' `annotation` properties are read from CSV files, the `counts` property is
 #' read from the `counts/` subdirectory, and the `analyses` property is read
 #' from the `analyses/` subdirectory.
@@ -372,8 +441,20 @@ S7::method(write_multiOmicDataSet_properties, multiOmicDataSet) <- function(
 #' @param input_dir Directory previously created by
 #'   [write_multiOmicDataSet_properties()].
 #'
-#' @returns A `multiOmicDataSet` object.
+#' @returns A [multiOmicDataSet] object.
 #' @export
+#' @family moo
+#' @examples
+#' sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
+#' )
+#' moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+#' output_dir <- tempfile()
+#' write_multiOmicDataSet_properties(moo, output_dir)
+#' moo2 <- read_multiOmicDataSet_properties(output_dir)
 read_multiOmicDataSet_properties <- function(input_dir) {
   sample_meta <- readr::read_csv(
     file.path(input_dir, "sample_metadata.csv"),
@@ -493,6 +574,16 @@ read_analyses_dir_ <- function(analyses_dir) {
 #'
 #' @returns A data frame of counts.
 #' @export
+#' @family moo
+#' @examples
+#' sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+#' counts_dat <- data.frame(
+#'   feature_id = c("gene1", "gene2"),
+#'   s1 = c(10, 20),
+#'   s2 = c(15, 25)
+#' )
+#' moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+#' extract_counts(moo, "raw")
 extract_counts <- S7::new_generic(
   name = "extract_counts",
   dispatch_args = "moo",

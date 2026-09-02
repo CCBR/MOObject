@@ -20,22 +20,62 @@ the \code{sample_meta}.}
 \item{analyses_lst}{named list of analysis results, e.g. DESeq results object}
 }
 \value{
-A \code{multiOmicDataSet} S7 object.
+A \link{multiOmicDataSet} S7 object.
 }
 \description{
 multiOmicDataSet class
 }
+\examples{
+# sample metadata (sample names, labels, groups, batches, etc.)
+sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+# counts data such as from bulk RNA-seq
+counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
+)
+# annotations for the counts data such as alternative gene names, gene IDs, etc.
+anno_dat <- data.frame(feature_id = c("gene1", "gene2"), ensembl_id = c('ENSG000001', 'ENSG000002'))
+
+# construct a multiOmicDataSet object
+moo <- multiOmicDataSet(
+  sample_metadata = sample_metadata,
+  counts_lst = list(raw = counts_dat),
+  anno_dat = anno_dat
+)
+moo
+S7::S7_class(moo)
+
+# validate the object
+S7::validate(moo)
+
+# Retrieve properties from the object
+head(moo@sample_meta)
+# Set properties in the object
+moo@sample_meta$batch <- c("C", "D")
+}
+\seealso{
+Other moo:
+\code{\link[=create_multiOmicDataSet_from_dataframes]{create_multiOmicDataSet_from_dataframes()}},
+\code{\link[=create_multiOmicDataSet_from_files]{create_multiOmicDataSet_from_files()}},
+\code{\link[=extract_counts]{extract_counts()}},
+\code{\link[=read_multiOmicDataSet]{read_multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet_properties]{read_multiOmicDataSet_properties()}},
+\code{\link[=write_multiOmicDataSet]{write_multiOmicDataSet()}},
+\code{\link[=write_multiOmicDataSet_properties]{write_multiOmicDataSet_properties()}}
+}
+\concept{moo}
 \section{Additional properties}{
 
 \describe{
 \item{\code{@sample_meta}}{sample metadata as a data frame or tibble. The first column is assumed to contain the sample
 IDs which must correspond to column names in the raw counts.}
 
-\item{\code{@annotation}}{data frame of feature annotations, such as gene symbols or any other information about the
-features in the counts list.}
-
 \item{\code{@counts}}{named list of counts data frames (e.g. \code{raw}, \code{clean}, \code{cpm}, \code{filt}, \code{norm}, \code{batch}). Each data
 frame is expected to contain a feature ID column as the first column, and all remaining columns are sample IDs.}
+
+\item{\code{@annotation}}{data frame of feature annotations, such as gene symbols or any other information about the
+features in the counts list.}
 
 \item{\code{@analyses}}{named list of analysis results (e.g. DESeq2 results, colors).}
 }}
