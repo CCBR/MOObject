@@ -1,6 +1,8 @@
 ## MOObject development version
 
 - MOObject is now archived in Zenodo with DOI [10.5281/zenodo.22239360)](https://doi.org/10.5281/zenodo.22239360). (#9, @kelly-sovacool)
+- Documentation improvements:
+  - Add runnable `@examples` to all exported functions, using synthetic data instead of network calls so they run reliably. (#10, @kelly-sovacool)
 
 ## MOObject 0.5.0
 
