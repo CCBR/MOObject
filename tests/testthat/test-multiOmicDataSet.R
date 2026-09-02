@@ -94,6 +94,34 @@ test_that("read and write rds round-trip", {
   expect_equal(restored@counts$raw, moo@counts$raw)
 })
 
+test_that("read_multiOmicDataSet coerces legacy class labels", {
+  sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
+  raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))
+
+  moo <- multiOmicDataSet(
+    sample_metadata = sample_meta,
+    anno_dat = data.frame(gene_id = c("g1", "g2"), stringsAsFactors = FALSE),
+    counts_lst = list(raw = raw)
+  )
+
+  class(moo) <- c("MOSuite::multiOmicDataSet", "S7_object")
+  path <- withr::local_tempfile(fileext = ".rds")
+  readr::write_rds(moo, path)
+
+  restored <- read_multiOmicDataSet(path)
+  expect_true(S7::S7_inherits(restored, multiOmicDataSet))
+  expect_equal(class(restored)[1], "MOObject::multiOmicDataSet")
+})
+
+test_that("read_multiOmicDataSet coerces legacy class labels from fixture", {
+  path <- testthat::test_path("data", "legacy-moo.rds")
+
+  restored <- read_multiOmicDataSet(path)
+  expect_true(S7::S7_inherits(restored, multiOmicDataSet))
+  expect_equal(class(restored)[1], "MOObject::multiOmicDataSet")
+  expect_equal(colnames(restored@counts$raw), c("gene_id", "S1", "S2"))
+})
+
 test_that("write_multiOmicDataSet_properties creates output_dir recursively when missing", {
   sample_meta <- data.frame(sample_id = c("S1", "S2"), stringsAsFactors = FALSE)
   raw <- data.frame(gene_id = c("g1", "g2"), S1 = c(1, 2), S2 = c(3, 4))

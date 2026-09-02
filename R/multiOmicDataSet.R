@@ -278,6 +278,53 @@ write_multiOmicDataSet <- function(moo, filepath = "moo.rds") {
   invisible(filepath)
 }
 
+#' Coerce legacy multiOmicDataSet objects to current class
+#'
+#' Accepts both legacy serialized objects (for example, class labels including
+#' `MOSuite::multiOmicDataSet`) and current MOObject-created objects.
+#' Legacy objects are reconstructed as `MOObject::multiOmicDataSet` so S7 method
+#' dispatch works consistently.
+#'
+#' @param moo object expected to represent a multiOmicDataSet
+#' @param source_label label used in error messages to identify the object source
+#'
+#' @returns a `multiOmicDataSet` object compatible with current S7 methods
+#' @keywords internal
+coerce_to_multiOmicDataSet <- function(moo, source_label = "input") {
+  moo_classes <- class(moo)
+  has_moo_class_label <-
+    inherits(moo, "multiOmicDataSet") ||
+    any(grepl("(^|::)multiOmicDataSet$", moo_classes))
+
+  if (!has_moo_class_label) {
+    stop(glue::glue(
+      "The input is not a multiOmicDataSet. class: {toString(moo_classes)}"
+    ))
+  }
+
+  if (S7::S7_inherits(moo, multiOmicDataSet)) {
+    moo_out <- moo
+  } else {
+    moo_out <- tryCatch(
+      {
+        multiOmicDataSet(
+          sample_metadata = moo@sample_meta,
+          anno_dat = moo@annotation,
+          counts_lst = moo@counts,
+          analyses_lst = moo@analyses
+        )
+      },
+      error = function(e) {
+        stop(glue::glue(
+          "Failed to coerce legacy multiOmicDataSet from {source_label}: {conditionMessage(e)}"
+        ))
+      }
+    )
+  }
+
+  return(moo_out)
+}
+
 #' Read a multiOmicDataSet from RDS
 #'
 #' @param filepath Path to an RDS file produced by [write_multiOmicDataSet()]
@@ -298,10 +345,19 @@ write_multiOmicDataSet <- function(moo, filepath = "moo.rds") {
 #' moo2 <- read_multiOmicDataSet(filepath)
 read_multiOmicDataSet <- function(filepath) {
   moo <- readr::read_rds(filepath)
-  if (!inherits(moo, multiOmicDataSet)) {
-    stop("RDS does not contain a multiOmicDataSet")
-  }
-  moo
+  moo <- tryCatch(
+    {
+      coerce_to_multiOmicDataSet(moo, source_label = filepath)
+    },
+    error = function(e) {
+      if (grepl("The input is not a multiOmicDataSet", conditionMessage(e))) {
+        stop("RDS does not contain a multiOmicDataSet")
+      }
+      stop(e)
+    }
+  )
+
+  return(moo)
 }
 
 #' Write multiOmicDataSet properties to individual files.
