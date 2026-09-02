@@ -29,6 +29,14 @@ Or install a specific version:
 remotes::install_github("CCBR/MOObject", dependencies = TRUE, ref = "v0.5.0")
 ```
 
+There is a Docker container with MOObject + MOSuite installed at
+<https://hub.docker.com/r/nciccbr/mosuite>. You can execute it with your
+preferred engine such as docker, podman, singularity/apptainer, etc.
+
+``` sh
+podman pull docker://nciccbr/mosuite:v0.5.0
+```
+
 ## Usage
 
 ### MOObject

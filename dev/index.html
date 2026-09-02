@@ -68,13 +68,8 @@
 <p>Or install a specific version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CCBR/MOObject"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span>, ref <span class="op">=</span> <span class="st">"v0.5.0"</span><span class="op">)</span></span></code></pre></div>
-<!--
-There is a Docker container with MOObject + MOSuite installed at <https://hub.docker.com/r/nciccbr/mosuite>.
-You can execute it with your preferred engine such as docker, podman, singularity/apptainer, etc.
-&#10;```sh
-podman pull docker://nciccbr/mosuite:v0.5.0
-```
--->
+<p>There is a Docker container with MOObject + MOSuite installed at <a href="https://hub.docker.com/r/nciccbr/mosuite" class="external-link uri">https://hub.docker.com/r/nciccbr/mosuite</a>. You can execute it with your preferred engine such as docker, podman, singularity/apptainer, etc.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">podman</span> pull docker://nciccbr/mosuite:v0.5.0</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -91,7 +86,7 @@ podman pull docker://nciccbr/mosuite:v0.5.0
 <li>Implement object-focused helpers only: constructors, validators, readers, and writers.</li>
 <li>Keep dependencies minimal (prefer base + S7 + lightweight IO packages only).</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CCBR/MOObject" class="external-link">MOObject</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create from csv files.</span></span>
@@ -126,7 +121,7 @@ podman pull docker://nciccbr/mosuite:v0.5.0
 </h3>
 <p>MOSuite is the main package containing method implementations for bulk-RNA-seq and multi-omics analysis. Please see the <a href="https://ccbr.github.io/MOSuite/articles/intro.html" class="external-link">introductory vignette</a> for a quick start tutorial, or take a look at the <a href="https://ccbr.github.io/MOSuite/reference/index.html" class="external-link">reference documentation</a> for detailed information on each function in the package.</p>
 <p>MOSuite depends on MOObject and wraps its functions, so if you’re already using MOSuite, you already have access to everything available in MOObject</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">MOSuite</span><span class="op">)</span></span>
 <span><span class="va">moo</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_multiOmicDataSet.html">read_multiOmicDataSet</a></span><span class="op">(</span><span class="st">'moo.rds'</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
