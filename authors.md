@@ -19,11 +19,14 @@ Source:
 [`inst/CITATION`](https://github.com/CCBR/MOObject/blob/main/inst/CITATION)
 
 Sovacool K, Homan P, Koparde V (2026). *MOObject: multiOmicDataSet
-object class for MOSuite*. <https://ccbr.github.io/MOObject/>.
+object class for MOSuite*.
+[doi:10.5281/zenodo.22239360](https://doi.org/10.5281/zenodo.22239360),
+<https://ccbr.github.io/MOObject/>.
 
     @Manual{sovacool_moobject_2026,
       title = {{MOObject}: multiOmicDataSet object class for MOSuite},
       author = {Kelly L Sovacool and Philip Homan and Vishal Koparde},
+      doi = {10.5281/zenodo.22239360},
       year = {2026},
       url = {https://ccbr.github.io/MOObject/},
     }

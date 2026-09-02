@@ -10,6 +10,7 @@
 <url><loc>https://ccbr.github.io/MOObject/index.html</loc></url>
 <url><loc>https://ccbr.github.io/MOObject/news/index.html</loc></url>
 <url><loc>https://ccbr.github.io/MOObject/reference/MOObject-package.html</loc></url>
+<url><loc>https://ccbr.github.io/MOObject/reference/coerce_to_multiOmicDataSet.html</loc></url>
 <url><loc>https://ccbr.github.io/MOObject/reference/create_multiOmicDataSet_from_dataframes.html</loc></url>
 <url><loc>https://ccbr.github.io/MOObject/reference/create_multiOmicDataSet_from_files.html</loc></url>
 <url><loc>https://ccbr.github.io/MOObject/reference/extract_counts.html</loc></url>

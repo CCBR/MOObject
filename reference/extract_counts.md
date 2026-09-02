@@ -31,3 +31,30 @@ extract_counts(moo, count_type, sub_count_type = NULL)
 ## Value
 
 A data frame of counts.
+
+## See also
+
+Other moo:
+[`create_multiOmicDataSet_from_dataframes()`](https://ccbr.github.io/MOObject/reference/create_multiOmicDataSet_from_dataframes.md),
+[`create_multiOmicDataSet_from_files()`](https://ccbr.github.io/MOObject/reference/create_multiOmicDataSet_from_files.md),
+[`multiOmicDataSet()`](https://ccbr.github.io/MOObject/reference/multiOmicDataSet.md),
+[`read_multiOmicDataSet()`](https://ccbr.github.io/MOObject/reference/read_multiOmicDataSet.md),
+[`read_multiOmicDataSet_properties()`](https://ccbr.github.io/MOObject/reference/read_multiOmicDataSet_properties.md),
+[`write_multiOmicDataSet()`](https://ccbr.github.io/MOObject/reference/write_multiOmicDataSet.md),
+[`write_multiOmicDataSet_properties()`](https://ccbr.github.io/MOObject/reference/write_multiOmicDataSet_properties.md)
+
+## Examples
+
+``` r
+sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
+)
+moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+extract_counts(moo, "raw")
+#>   feature_id s1 s2
+#> 1      gene1 10 15
+#> 2      gene2 20 25
+```
