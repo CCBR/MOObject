@@ -33,23 +33,40 @@ If the files are in CSV format, set \code{delim = ','}; for TSV format, set \cod
 \item{...}{additional arguments forwarded to \code{readr::read_delim()}.}
 }
 \value{
-A \code{multiOmicDataSet} object.
+A \link{multiOmicDataSet} object.
 }
 \description{
 Construct a multiOmicDataSet object from text files (e.g. TSV, CSV).
 }
 \examples{
-base_url <- paste0(
-  "https://raw.githubusercontent.com/CCBR/MOSuite/",
-  "refs/tags/v0.4.2/inst/extdata/nidap/"
+sample_meta_dat <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+feature_counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
 )
+sample_meta_filepath <- tempfile(fileext = ".csv")
+feature_counts_filepath <- tempfile(fileext = ".csv")
+readr::write_csv(sample_meta_dat, sample_meta_filepath)
+readr::write_csv(feature_counts_dat, feature_counts_filepath)
+
 moo <- create_multiOmicDataSet_from_files(
-  sample_meta_filepath = paste0(
-    base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
-  ),
-  feature_counts_filepath = paste0(base_url, "Raw_Counts.csv.gz")
+  sample_meta_filepath = sample_meta_filepath,
+  feature_counts_filepath = feature_counts_filepath,
+  delim = ","
 )
 head(moo@sample_meta)
 head(moo@counts[['raw']])
 
 }
+\seealso{
+Other moo:
+\code{\link[=create_multiOmicDataSet_from_dataframes]{create_multiOmicDataSet_from_dataframes()}},
+\code{\link[=extract_counts]{extract_counts()}},
+\code{\link[=multiOmicDataSet]{multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet]{read_multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet_properties]{read_multiOmicDataSet_properties()}},
+\code{\link[=write_multiOmicDataSet]{write_multiOmicDataSet()}},
+\code{\link[=write_multiOmicDataSet_properties]{write_multiOmicDataSet_properties()}}
+}
+\concept{moo}

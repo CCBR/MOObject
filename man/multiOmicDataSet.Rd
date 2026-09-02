@@ -20,11 +20,37 @@ the \code{sample_meta}.}
 \item{analyses_lst}{named list of analysis results, e.g. DESeq results object}
 }
 \value{
-A \code{multiOmicDataSet} S7 object.
+A \link{multiOmicDataSet} S7 object.
 }
 \description{
 multiOmicDataSet class
 }
+\examples{
+sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+anno_dat <- data.frame(feature_id = c("gene1", "gene2"))
+counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
+)
+moo <- multiOmicDataSet(
+  sample_metadata = sample_metadata,
+  anno_dat = anno_dat,
+  counts_lst = list(raw = counts_dat)
+)
+moo
+}
+\seealso{
+Other moo:
+\code{\link[=create_multiOmicDataSet_from_dataframes]{create_multiOmicDataSet_from_dataframes()}},
+\code{\link[=create_multiOmicDataSet_from_files]{create_multiOmicDataSet_from_files()}},
+\code{\link[=extract_counts]{extract_counts()}},
+\code{\link[=read_multiOmicDataSet]{read_multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet_properties]{read_multiOmicDataSet_properties()}},
+\code{\link[=write_multiOmicDataSet]{write_multiOmicDataSet()}},
+\code{\link[=write_multiOmicDataSet_properties]{write_multiOmicDataSet_properties()}}
+}
+\concept{moo}
 \section{Additional properties}{
 
 \describe{

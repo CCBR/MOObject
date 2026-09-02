@@ -11,7 +11,7 @@ write_multiOmicDataSet_properties(moo, output_dir = "moo")
 write_multiOmicDataSet_properties(moo, output_dir = "moo")
 }
 \arguments{
-\item{moo}{\code{multiOmicDataSet} object to write properties from}
+\item{moo}{\link{multiOmicDataSet} object to write properties from}
 
 \item{output_dir}{Directory where the properties will be saved (default: "moo")}
 }
@@ -24,3 +24,25 @@ The \code{sample_meta} and \code{annotation} properties are written to CSV files
 \code{analyses} property is written to a subdirectory of CSV or RDS files
 depending on the type of each analysis result.
 }
+\examples{
+sample_metadata <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
+)
+moo <- create_multiOmicDataSet_from_dataframes(sample_metadata, counts_dat)
+output_dir <- tempfile()
+write_multiOmicDataSet_properties(moo, output_dir)
+}
+\seealso{
+Other moo:
+\code{\link[=create_multiOmicDataSet_from_dataframes]{create_multiOmicDataSet_from_dataframes()}},
+\code{\link[=create_multiOmicDataSet_from_files]{create_multiOmicDataSet_from_files()}},
+\code{\link[=extract_counts]{extract_counts()}},
+\code{\link[=multiOmicDataSet]{multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet]{read_multiOmicDataSet()}},
+\code{\link[=read_multiOmicDataSet_properties]{read_multiOmicDataSet_properties()}},
+\code{\link[=write_multiOmicDataSet]{write_multiOmicDataSet()}}
+}
+\concept{moo}
