@@ -56,55 +56,65 @@ create_multiOmicDataSet_from_files(
 
 ## Value
 
-A `multiOmicDataSet` object.
+A
+[multiOmicDataSet](https://ccbr.github.io/MOObject/dev/reference/multiOmicDataSet.md)
+object.
+
+## See also
+
+Other moo:
+[`create_multiOmicDataSet_from_dataframes()`](https://ccbr.github.io/MOObject/dev/reference/create_multiOmicDataSet_from_dataframes.md),
+[`extract_counts()`](https://ccbr.github.io/MOObject/dev/reference/extract_counts.md),
+[`multiOmicDataSet()`](https://ccbr.github.io/MOObject/dev/reference/multiOmicDataSet.md),
+[`read_multiOmicDataSet()`](https://ccbr.github.io/MOObject/dev/reference/read_multiOmicDataSet.md),
+[`read_multiOmicDataSet_properties()`](https://ccbr.github.io/MOObject/dev/reference/read_multiOmicDataSet_properties.md),
+[`write_multiOmicDataSet()`](https://ccbr.github.io/MOObject/dev/reference/write_multiOmicDataSet.md),
+[`write_multiOmicDataSet_properties()`](https://ccbr.github.io/MOObject/dev/reference/write_multiOmicDataSet_properties.md)
 
 ## Examples
 
 ``` r
-base_url <- paste0(
-  "https://raw.githubusercontent.com/CCBR/MOSuite/",
-  "refs/tags/v0.4.2/inst/extdata/nidap/"
+sample_meta_dat <- data.frame(sample_id = c("s1", "s2"), group = c("A", "B"))
+feature_counts_dat <- data.frame(
+  feature_id = c("gene1", "gene2"),
+  s1 = c(10, 20),
+  s2 = c(15, 25)
 )
+sample_meta_filepath <- tempfile(fileext = ".csv")
+feature_counts_filepath <- tempfile(fileext = ".csv")
+readr::write_csv(sample_meta_dat, sample_meta_filepath)
+readr::write_csv(feature_counts_dat, feature_counts_filepath)
+
 moo <- create_multiOmicDataSet_from_files(
-  sample_meta_filepath = paste0(
-    base_url, "Sample_Metadata_Bulk_RNA-seq_Training_Dataset_CCBR.csv.gz"
-  ),
-  feature_counts_filepath = paste0(base_url, "Raw_Counts.csv.gz")
+  sample_meta_filepath = sample_meta_filepath,
+  feature_counts_filepath = feature_counts_filepath,
+  delim = ","
 )
-#> Rows: 43280 Columns: 10
+#> Rows: 2 Columns: 3
 #> ── Column specification ────────────────────────────────────────────────────────
 #> Delimiter: ","
-#> chr (1): GeneName
-#> dbl (9): A1, A2, A3, B1, B2, B3, C1, C2, C3
+#> chr (1): feature_id
+#> dbl (2): s1, s2
 #> 
 #> ℹ Use `spec()` to retrieve the full column specification for this data.
 #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-#> Rows: 9 Columns: 5
+#> Rows: 2 Columns: 2
 #> ── Column specification ────────────────────────────────────────────────────────
 #> Delimiter: ","
-#> chr (3): Sample, Group, Label
-#> dbl (2): Replicate, Batch
+#> chr (2): sample_id, group
 #> 
 #> ℹ Use `spec()` to retrieve the full column specification for this data.
 #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 head(moo@sample_meta)
-#> # A tibble: 6 × 5
-#>   Sample Group Replicate Batch Label
-#>   <chr>  <chr>     <dbl> <dbl> <chr>
-#> 1 A1     A             1     1 A1   
-#> 2 A2     A             2     2 A2   
-#> 3 A3     A             3     2 A3   
-#> 4 B1     B             1     1 B1   
-#> 5 B2     B             2     1 B2   
-#> 6 B3     B             3     2 B3   
+#> # A tibble: 2 × 2
+#>   sample_id group
+#>   <chr>     <chr>
+#> 1 s1        A    
+#> 2 s2        B    
 head(moo@counts[['raw']])
-#> # A tibble: 6 × 10
-#>   GeneName         A1    A2    A3    B1    B2    B3    C1    C2    C3
-#>   <chr>         <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-#> 1 RP23-271O17.1     0     0     0     0     0     0     0     0     0
-#> 2 Gm26206           0     0     0     0     0     0     0     0     0
-#> 3 Xkr4              0     0     0     0     0     0     0     0     0
-#> 4 RP23-317L18.1     0     0     0     0     0     0     0     0     0
-#> 5 RP23-317L18.4     0     0     0     0     0     0     0     0     0
-#> 6 RP23-317L18.3     0     0     0     0     0     0     0     0     0
+#> # A tibble: 2 × 3
+#>   feature_id    s1    s2
+#>   <chr>      <dbl> <dbl>
+#> 1 gene1         10    15
+#> 2 gene2         20    25
 ```

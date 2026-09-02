@@ -69,7 +69,18 @@ the <code>sample_meta</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>multiOmicDataSet</code> S7 object.</p>
+    <p>A multiOmicDataSet S7 object.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other moo:
+<code><a href="create_multiOmicDataSet_from_dataframes.html">create_multiOmicDataSet_from_dataframes()</a></code>,
+<code><a href="create_multiOmicDataSet_from_files.html">create_multiOmicDataSet_from_files()</a></code>,
+<code><a href="extract_counts.html">extract_counts()</a></code>,
+<code><a href="read_multiOmicDataSet.html">read_multiOmicDataSet()</a></code>,
+<code><a href="read_multiOmicDataSet_properties.html">read_multiOmicDataSet_properties()</a></code>,
+<code><a href="write_multiOmicDataSet.html">write_multiOmicDataSet()</a></code>,
+<code><a href="write_multiOmicDataSet_properties.html">write_multiOmicDataSet_properties()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="additional-properties">Additional properties<a class="anchor" aria-label="anchor" href="#additional-properties"></a></h2>
@@ -80,14 +91,14 @@ the <code>sample_meta</code>.</p></dd>
 IDs which must correspond to column names in the raw counts.</p></dd>
 
 
-<dt><code>@annotation</code></dt>
-<dd><p>data frame of feature annotations, such as gene symbols or any other information about the
-features in the counts list.</p></dd>
-
-
 <dt><code>@counts</code></dt>
 <dd><p>named list of counts data frames (e.g. <code>raw</code>, <code>clean</code>, <code>cpm</code>, <code>filt</code>, <code>norm</code>, <code>batch</code>). Each data
 frame is expected to contain a feature ID column as the first column, and all remaining columns are sample IDs.</p></dd>
+
+
+<dt><code>@annotation</code></dt>
+<dd><p>data frame of feature annotations, such as gene symbols or any other information about the
+features in the counts list.</p></dd>
 
 
 <dt><code>@analyses</code></dt>
@@ -96,6 +107,62 @@ frame is expected to contain a feature ID column as the first column, and all re
 
 </dl></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># sample metadata (sample names, labels, groups, batches, etc.)</span></span></span>
+<span class="r-in"><span><span class="va">sample_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>sample_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"s1"</span>, <span class="st">"s2"</span><span class="op">)</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># counts data such as from bulk RNA-seq</span></span></span>
+<span class="r-in"><span><span class="va">counts_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  feature_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gene1"</span>, <span class="st">"gene2"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  s1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  s2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">25</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># annotations for the counts data such as alternative gene names, gene IDs, etc.</span></span></span>
+<span class="r-in"><span><span class="va">anno_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>feature_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gene1"</span>, <span class="st">"gene2"</span><span class="op">)</span>, ensembl_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'ENSG000001'</span>, <span class="st">'ENSG000002'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># construct a multiOmicDataSet object</span></span></span>
+<span class="r-in"><span><span class="va">moo</span> <span class="op">&lt;-</span> <span class="fu">multiOmicDataSet</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sample_metadata <span class="op">=</span> <span class="va">sample_metadata</span>,</span></span>
+<span class="r-in"><span>  counts_lst <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>raw <span class="op">=</span> <span class="va">counts_dat</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  anno_dat <span class="op">=</span> <span class="va">anno_dat</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">moo</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MOObject::multiOmicDataSet&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  @ sample_meta:'data.frame':	2 obs. of  2 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  .. $ sample_id: chr  "s1" "s2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  .. $ group    : chr  "A" "B"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  @ counts     :List of 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  .. $ raw:'data.frame':	2 obs. of  3 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ..  ..$ feature_id: chr [1:2] "gene1" "gene2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ..  ..$ s1        : num [1:2] 10 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ..  ..$ s2        : num [1:2] 15 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  @ annotation :'data.frame':	2 obs. of  2 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  .. $ feature_id: chr  "gene1" "gene2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  .. $ ensembl_id: chr  "ENSG000001" "ENSG000002"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  @ analyses   : list()</span>
+<span class="r-in"><span><span class="fu">S7</span><span class="fu">::</span><span class="fu"><a href="https://rconsortium.github.io/S7/reference/S7_class.html" class="external-link">S7_class</a></span><span class="op">(</span><span class="va">moo</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MOObject::multiOmicDataSet&gt; class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ parent     : &lt;S7_object&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ constructor: function(sample_metadata, anno_dat, counts_lst, analyses_lst) {...}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ validator  : function(self) {...}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ properties :</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sample_meta: S3&lt;data.frame&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ counts     : &lt;list&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ annotation : S3&lt;data.frame&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ analyses   : &lt;list&gt;        </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># validate the object</span></span></span>
+<span class="r-in"><span><span class="fu">S7</span><span class="fu">::</span><span class="fu"><a href="https://rconsortium.github.io/S7/reference/validate.html" class="external-link">validate</a></span><span class="op">(</span><span class="va">moo</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Retrieve properties from the object</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">moo</span><span class="op">@</span><span class="va">sample_meta</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   sample_id group</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        s1     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        s2     B</span>
+<span class="r-in"><span><span class="co"># Set properties in the object</span></span></span>
+<span class="r-in"><span><span class="va">moo</span><span class="op">@</span><span class="va">sample_meta</span><span class="op">$</span><span class="va">batch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
